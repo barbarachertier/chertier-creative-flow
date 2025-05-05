@@ -82,15 +82,32 @@ const SkillsSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [animatedSkills, setAnimatedSkills] = useState<number[]>([]);
+  const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Filter skills when category changes
   useEffect(() => {
+    // Reset animated skills when category changes
+    setAnimatedSkills([]);
+    
     const filteredSkills = selectedCategory === "all" 
       ? skills 
       : skills.filter(skill => skill.category === selectedCategory);
     
     setVisibleSkills(filteredSkills);
+    
+    // Clear any existing animation interval
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+    
+    // If section is already visible, start animating the new skills
+    if (isVisible) {
+      startSkillsAnimation(filteredSkills);
+    }
   }, [selectedCategory]);
 
+  // Handle section visibility
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -117,26 +134,55 @@ const SkillsSection = () => {
     };
   }, []);
 
+  // Start animation when section becomes visible
   useEffect(() => {
     if (isVisible) {
-      const timer = setTimeout(() => {
-        // Animate all skills one by one with delay
-        let delay = 0;
-        const interval = setInterval(() => {
-          if (delay < visibleSkills.length) {
-            setAnimatedSkills(prev => [...prev, visibleSkills[delay].id]);
-            delay++;
-          } else {
-            clearInterval(interval);
-          }
-        }, 200);
-        
-        return () => clearInterval(interval);
-      }, 400);
-      
-      return () => clearTimeout(timer);
+      startSkillsAnimation(visibleSkills);
     }
-  }, [isVisible, visibleSkills]);
+    
+    return () => {
+      // Clean up interval on unmount
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, [isVisible]);
+
+  // Helper function to start skills animation
+  const startSkillsAnimation = (skills: Skill[]) => {
+    // Clean up any existing interval first
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+    
+    // Wait a little before starting animation
+    const timer = setTimeout(() => {
+      let delay = 0;
+      
+      // Safely animate skills one by one
+      intervalRef.current = setInterval(() => {
+        if (delay < skills.length) {
+          const skillId = skills[delay].id;
+          setAnimatedSkills(prev => [...prev, skillId]);
+          delay++;
+        } else {
+          // Clear interval once all skills are animated
+          if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
+          }
+        }
+      }, 200);
+    }, 400);
+    
+    return () => {
+      clearTimeout(timer);
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+  };
 
   return (
     <section id="skills" className="py-20 bg-green-light/30">
