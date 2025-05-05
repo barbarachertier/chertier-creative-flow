@@ -70,12 +70,12 @@ const ContactSection = () => {
   };
 
   return (
-    <section id="contact" className="py-20 bg-beige-light">
+    <section id="contact" className="py-20 bg-pink-light/30">
       <div 
         ref={sectionRef}
         className="section-container"
       >
-        <span className={`text-gold-dark font-medium block transition-all duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>Get in Touch</span>
+        <span className={`text-pink-dark font-medium block transition-all duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>Get in Touch</span>
         <h2 className={`section-title mt-2 transition-all duration-700 delay-100 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>Contact</h2>
         
         <div className="grid md:grid-cols-2 gap-12 lg:gap-20">
@@ -83,7 +83,7 @@ const ContactSection = () => {
           <div className={`transition-all duration-700 delay-200 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
             <form onSubmit={handleSubmit} className="space-y-6">
               {isSubmitted ? (
-                <div className="bg-green-light/50 border border-green-DEFAULT p-4 rounded-lg text-center">
+                <div className="bg-pink-light/50 border border-pink-DEFAULT p-4 rounded-lg text-center">
                   <p className="font-medium text-primary">Thank you for your message!</p>
                   <p className="text-sm text-muted-foreground mt-1">I'll be in touch with you shortly.</p>
                 </div>
@@ -100,7 +100,7 @@ const ContactSection = () => {
                       value={formState.name}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 bg-offwhite border border-beige-dark/20 rounded-md focus:outline-none focus:ring-1 focus:ring-green-dark"
+                      className="w-full px-4 py-3 bg-offwhite border border-beige-dark/20 rounded-md focus:outline-none focus:ring-1 focus:ring-pink-DEFAULT"
                     />
                   </div>
                   
@@ -115,7 +115,7 @@ const ContactSection = () => {
                       value={formState.email}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 bg-offwhite border border-beige-dark/20 rounded-md focus:outline-none focus:ring-1 focus:ring-green-dark"
+                      className="w-full px-4 py-3 bg-offwhite border border-beige-dark/20 rounded-md focus:outline-none focus:ring-1 focus:ring-pink-DEFAULT"
                     />
                   </div>
                   
@@ -130,7 +130,7 @@ const ContactSection = () => {
                       onChange={handleChange}
                       required
                       rows={5}
-                      className="w-full px-4 py-3 bg-offwhite border border-beige-dark/20 rounded-md focus:outline-none focus:ring-1 focus:ring-green-dark"
+                      className="w-full px-4 py-3 bg-offwhite border border-beige-dark/20 rounded-md focus:outline-none focus:ring-1 focus:ring-pink-DEFAULT"
                     ></textarea>
                   </div>
                   
@@ -141,8 +141,8 @@ const ContactSection = () => {
                       className={cn(
                         "w-full py-3 rounded-md transition-all font-medium",
                         isSubmitting 
-                          ? "bg-green-light text-primary/70 cursor-not-allowed" 
-                          : "bg-green-DEFAULT hover:bg-green-dark text-primary"
+                          ? "bg-pink-light text-primary/70 cursor-not-allowed" 
+                          : "bg-pink-DEFAULT hover:bg-pink-dark text-offwhite"
                       )}
                     >
                       {isSubmitting ? "Sending..." : "Send Message"}
@@ -163,7 +163,7 @@ const ContactSection = () => {
               <div className="space-y-4 mt-8">
                 {/* Location */}
                 <div className="flex items-start gap-4">
-                  <div className="bg-green-light w-10 h-10 rounded-full flex items-center justify-center mt-1">
+                  <div className="bg-pink-light w-10 h-10 rounded-full flex items-center justify-center mt-1">
                     <svg 
                       xmlns="http://www.w3.org/2000/svg" 
                       width="18"
@@ -188,7 +188,7 @@ const ContactSection = () => {
                 
                 {/* Email */}
                 <div className="flex items-start gap-4">
-                  <div className="bg-green-light w-10 h-10 rounded-full flex items-center justify-center mt-1">
+                  <div className="bg-pink-light w-10 h-10 rounded-full flex items-center justify-center mt-1">
                     <Mail className="w-5 h-5 text-primary" />
                   </div>
                   <div>
@@ -201,7 +201,7 @@ const ContactSection = () => {
                 
                 {/* Phone */}
                 <div className="flex items-start gap-4">
-                  <div className="bg-green-light w-10 h-10 rounded-full flex items-center justify-center mt-1">
+                  <div className="bg-pink-light w-10 h-10 rounded-full flex items-center justify-center mt-1">
                     <Phone className="w-5 h-5 text-primary" />
                   </div>
                   <div>
@@ -221,7 +221,7 @@ const ContactSection = () => {
                     href="https://linkedin.com/" 
                     target="_blank" 
                     rel="noreferrer"
-                    className="bg-green-light hover:bg-green-DEFAULT transition-colors w-10 h-10 rounded-full flex items-center justify-center"
+                    className="bg-pink-light hover:bg-pink-DEFAULT transition-colors w-10 h-10 rounded-full flex items-center justify-center"
                   >
                     <Linkedin className="w-5 h-5 text-primary" />
                     <span className="sr-only">LinkedIn</span>
@@ -230,7 +230,7 @@ const ContactSection = () => {
                     href="https://instagram.com/" 
                     target="_blank" 
                     rel="noreferrer"
-                    className="bg-green-light hover:bg-green-DEFAULT transition-colors w-10 h-10 rounded-full flex items-center justify-center"
+                    className="bg-pink-light hover:bg-pink-DEFAULT transition-colors w-10 h-10 rounded-full flex items-center justify-center"
                   >
                     <Instagram className="w-5 h-5 text-primary" />
                     <span className="sr-only">Instagram</span>

@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { Dialog, DialogContent, DialogClose } from "@/components/ui/dialog";
 import { cn } from '@/lib/utils';
@@ -120,7 +119,7 @@ const PortfolioSection = () => {
         ref={sectionRef}
         className="section-container"
       >
-        <span className={`text-gold-dark font-medium block transition-all duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>My Work</span>
+        <span className={`text-pink-dark font-medium block transition-all duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>My Work</span>
         <h2 className={`section-title mt-2 transition-all duration-700 delay-100 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>Portfolio</h2>
         
         {/* Categories filter */}
@@ -132,8 +131,8 @@ const PortfolioSection = () => {
               className={cn(
                 "px-4 py-2 text-sm rounded-full transition-all",
                 selectedCategory === category.id
-                  ? "bg-green-DEFAULT text-primary"
-                  : "bg-beige-light hover:bg-green-light text-muted-foreground"
+                  ? "bg-pink-DEFAULT text-primary-foreground"
+                  : "bg-offwhite hover:bg-pink-light text-muted-foreground"
               )}
             >
               {category.name}
@@ -232,7 +231,7 @@ const PortfolioSection = () => {
                 <h3 className="text-xl font-medium font-playfair mb-2">{selectedProject.title}</h3>
                 <p className="text-muted-foreground mb-4">{selectedProject.description}</p>
                 <div className="flex items-center gap-2 text-sm">
-                  <span className="bg-green-light px-3 py-1 rounded-full">
+                  <span className="bg-pink-light px-3 py-1 rounded-full">
                     {selectedProject.category === 'design' && 'Graphic Design'}
                     {selectedProject.category === 'marketing' && 'Marketing'}
                     {selectedProject.category === 'video' && 'Video Production'}

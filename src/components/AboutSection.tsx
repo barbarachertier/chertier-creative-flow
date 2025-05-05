@@ -39,7 +39,7 @@ const AboutSection = () => {
       >
         {/* About Content */}
         <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-8'}`}>
-          <span className="text-gold-dark font-medium">About Me</span>
+          <span className="text-pink-dark font-medium">About Me</span>
           <h2 className="section-title mt-2">Creative Vision, Digital Expertise</h2>
           <div className="space-y-4">
             <p className="text-muted-foreground">
@@ -62,13 +62,13 @@ const AboutSection = () => {
         {/* Image */}
         <div className={`transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-8'}`}>
           <div className="relative">
-            <div className="absolute -top-4 -left-4 w-full h-full border-2 border-green-light"></div>
+            <div className="absolute -top-4 -left-4 w-full h-full border-2 border-pink-light"></div>
             <img 
               src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?ixlib=rb-4.0.3" 
               alt="Barbara Chertier" 
               className="w-full h-auto object-cover"
             />
-            <div className="absolute -bottom-4 -right-4 w-full h-full border-2 border-gold-light"></div>
+            <div className="absolute -bottom-4 -right-4 w-full h-full border-2 border-pink-DEFAULT"></div>
           </div>
         </div>
       </div>

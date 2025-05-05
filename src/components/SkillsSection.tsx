@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { Star } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -185,12 +184,12 @@ const SkillsSection = () => {
   };
 
   return (
-    <section id="skills" className="py-20 bg-green-light/30">
+    <section id="skills" className="py-20 bg-beige-light">
       <div 
         ref={sectionRef}
         className="section-container"
       >
-        <span className={`text-gold-dark font-medium block transition-all duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>Expertise</span>
+        <span className={`text-pink-dark font-medium block transition-all duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>Expertise</span>
         <h2 className={`section-title mt-2 transition-all duration-700 delay-100 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>Skills & Proficiencies</h2>
         
         {/* Categories filter */}
@@ -202,8 +201,8 @@ const SkillsSection = () => {
               className={cn(
                 "px-4 py-2 text-sm rounded-full transition-all",
                 selectedCategory === category.id
-                  ? "bg-green-DEFAULT text-primary"
-                  : "bg-beige-light hover:bg-green-light text-muted-foreground"
+                  ? "bg-pink-DEFAULT text-primary-foreground"
+                  : "bg-offwhite hover:bg-pink-light text-muted-foreground"
               )}
             >
               {category.name}
@@ -221,8 +220,8 @@ const SkillsSection = () => {
             >
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
-                  <div className="bg-gold-light w-10 h-10 rounded-full flex items-center justify-center">
-                    <Star className="w-5 h-5 text-gold-dark" />
+                  <div className="bg-pink-light w-10 h-10 rounded-full flex items-center justify-center">
+                    <Star className="w-5 h-5 text-pink-dark" />
                   </div>
                   <h3 className="font-medium">{skill.name}</h3>
                 </div>
@@ -231,7 +230,7 @@ const SkillsSection = () => {
               
               <div className="h-2 bg-beige-light rounded-full overflow-hidden">
                 <div 
-                  className="h-full bg-gradient-to-r from-green-dark to-gold-dark transition-all duration-1000 ease-out"
+                  className="h-full bg-gradient-to-r from-pink-DEFAULT to-pink-dark transition-all duration-1000 ease-out"
                   style={{ 
                     width: animatedSkills.includes(skill.id) ? `${skill.proficiency}%` : '0%' 
                   }}

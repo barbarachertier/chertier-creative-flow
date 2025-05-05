@@ -76,18 +76,18 @@ const ExperienceSection = () => {
   const selectedExperience = experiences.find((exp) => exp.id === activeExperience) || experiences[0];
 
   return (
-    <section id="experience" className="py-20 bg-beige-light">
+    <section id="experience" className="py-20 bg-pink-light/30">
       <div 
         ref={sectionRef}
         className="section-container"
       >
-        <span className={`text-gold-dark font-medium block transition-all duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>Professional Journey</span>
+        <span className={`text-pink-dark font-medium block transition-all duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>Professional Journey</span>
         <h2 className={`section-title mt-2 transition-all duration-700 delay-100 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>Experience</h2>
         
         <div className="mt-12 grid md:grid-cols-3 gap-8 lg:gap-12">
           {/* Experience Timeline */}
           <div className={`transition-all duration-700 delay-200 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-            <div className="space-y-5 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-1/2 before:h-full before:w-0.5 before:bg-green-light/50 md:before:ml-[7.5rem]">
+            <div className="space-y-5 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-1/2 before:h-full before:w-0.5 before:bg-pink-light md:before:ml-[7.5rem]">
               {experiences.map((exp) => (
                 <div
                   key={exp.id}
@@ -105,8 +105,8 @@ const ExperienceSection = () => {
                       className={cn(
                         "absolute left-0 md:left-auto md:right-full md:mr-[2.2rem] flex items-center justify-center mt-1.5 w-4 h-4 rounded-full border cursor-pointer transition-all",
                         activeExperience === exp.id 
-                          ? "bg-green-DEFAULT border-green-dark" 
-                          : "bg-beige-light border-green-light hover:bg-green-light"
+                          ? "bg-pink-DEFAULT border-pink-dark" 
+                          : "bg-offwhite border-pink-light hover:bg-pink-light"
                       )}
                       onClick={() => setActiveExperience(exp.id)}
                     />
@@ -132,7 +132,7 @@ const ExperienceSection = () => {
           <div className={`md:col-span-2 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
             <div className="bg-offwhite p-6 lg:p-8 rounded-lg">
               <div className="flex items-center gap-3 mb-4">
-                <div className="bg-green-light w-10 h-10 rounded-full flex items-center justify-center">
+                <div className="bg-pink-light w-10 h-10 rounded-full flex items-center justify-center">
                   <Briefcase className="w-5 h-5 text-primary" />
                 </div>
                 <div>

@@ -22,6 +22,7 @@ export default {
 			fontFamily: {
 				'playfair': ['"Playfair Display"', 'serif'],
 				'lato': ['Lato', 'sans-serif'],
+				'poppins': ['Poppins', 'sans-serif'],
 			},
 			colors: {
 				border: 'hsl(var(--border))',
@@ -30,26 +31,26 @@ export default {
 				background: 'hsl(var(--background))',
 				foreground: 'hsl(var(--foreground))',
 				beige: {
-					light: '#F5F2EB',
-					DEFAULT: '#EAE6DC',
-					dark: '#D8D0C3',
+					light: '#FCF4F1',
+					DEFAULT: '#F9E5DF',
+					dark: '#F4D1C8',
 				},
 				green: {
-					light: '#E1E5DE',
-					DEFAULT: '#D1D9CE',
-					dark: '#B8C4B2',
+					light: '#E8F0EB',
+					DEFAULT: '#D1DFDA',
+					dark: '#B3CCC3',
 				},
 				gold: {
-					light: '#E1D9BD',
-					DEFAULT: '#D4C7A5',
-					dark: '#C0B48E',
+					light: '#F9E8D2',
+					DEFAULT: '#F5D8B4',
+					dark: '#EEBA8B',
 				},
 				pink: {
 					light: '#FCE4EC',
 					DEFAULT: '#F8BBD0',
 					dark: '#F48FB1',
 				},
-				offwhite: '#FDFBF9',
+				offwhite: '#FFF8F5',
 				primary: {
 					DEFAULT: 'hsl(var(--primary))',
 					foreground: 'hsl(var(--primary-foreground))'
