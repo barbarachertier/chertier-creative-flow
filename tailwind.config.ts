@@ -45,9 +45,9 @@ export default {
 					dark: '#C0B48E',
 				},
 				pink: {
-					light: '#EDE1E2',
-					DEFAULT: '#E6D0D2',
-					dark: '#D9BEC0',
+					light: '#FCE4EC',
+					DEFAULT: '#F8BBD0',
+					dark: '#F48FB1',
 				},
 				offwhite: '#FDFBF9',
 				primary: {

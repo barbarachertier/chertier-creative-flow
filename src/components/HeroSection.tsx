@@ -1,5 +1,7 @@
 
 import { useEffect, useState } from "react";
+import { Button } from "./ui/button";
+import { ChevronDown } from "lucide-react";
 
 const HeroSection = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -14,65 +16,61 @@ const HeroSection = () => {
   }, []);
 
   return (
-    <section className="min-h-screen relative flex items-center justify-center">
-      {/* Background Image - placeholder for now, replace with Barbara's portrait */}
-      <div className="absolute inset-0 -z-10">
-        <div 
-          className="w-full h-full bg-[url('https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?ixlib=rb-4.0.3')] 
-          bg-cover bg-center bg-no-repeat opacity-90"
-          style={{ 
-            filter: 'grayscale(0.2) brightness(0.9)' 
-          }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/30 to-beige-light/80" />
-      </div>
-
-      {/* Hero Content */}
-      <div className="container mx-auto px-6 z-10 pt-20">
-        <div className="max-w-3xl">
+    <section className="min-h-screen relative flex items-center justify-center overflow-hidden">
+      {/* Background gradient */}
+      <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#FCE4EC] to-[#FFF8F5]" />
+      
+      {/* Hero Content - Two-column layout */}
+      <div className="container mx-auto px-6 py-16 grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center z-10">
+        
+        {/* Left Column - Text Content */}
+        <div className="flex flex-col max-w-xl order-2 lg:order-1">
           <h1 
-            className={`text-4xl md:text-5xl lg:text-6xl font-playfair font-medium text-offwhite mb-6 
+            className={`text-4xl md:text-5xl font-playfair font-medium text-[#4A4A4A] mb-6 
               transition-all duration-1000 ease-out ${isLoaded ? 'opacity-100' : 'opacity-0 translate-y-8'}`}
           >
-            Barbara Chertier
+            Hi, I'm Barbara <span className="inline-block animate-bounce ml-2">👋</span>
           </h1>
           <p 
-            className={`text-xl md:text-2xl text-offwhite/90 max-w-lg transition-all duration-1000 delay-300 ease-out
+            className={`text-lg md:text-xl text-gray-600 mb-8 leading-relaxed transition-all duration-1000 delay-300 ease-out
               ${isLoaded ? 'opacity-100' : 'opacity-0 translate-y-8'}`}
           >
-            Creative Digital Communication Specialist
+            Creative Digital Communication Specialist with a spark for design, video & storytelling. I turn ideas into eye-catching content with purpose and passion.
           </p>
           <div 
-            className={`mt-10 transition-all duration-1000 delay-500 ease-out
+            className={`transition-all duration-1000 delay-500 ease-out
               ${isLoaded ? 'opacity-100' : 'opacity-0 translate-y-8'}`}
           >
-            <a 
-              href="#about" 
-              className="inline-block px-8 py-3 border border-offwhite text-offwhite hover:bg-offwhite/10 transition-colors rounded-md"
+            <Button 
+              className="px-8 py-6 rounded-full bg-gradient-to-r from-pink-200 to-pink-300 hover:from-pink-300 hover:to-pink-400 text-white font-medium text-lg transform transition-all hover:scale-105 hover:shadow-lg"
+              onClick={() => document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              Discover My Work
-            </a>
+              Explore My Portfolio
+            </Button>
+          </div>
+        </div>
+        
+        {/* Right Column - Portrait Image */}
+        <div className={`flex justify-center items-center order-1 lg:order-2 transition-all duration-1000 delay-300 ease-out ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
+          <div className="relative rounded-full overflow-hidden shadow-xl w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96">
+            <img 
+              src="/lovable-uploads/ed311d7e-00fe-4aca-b901-4b84d532eed8.png" 
+              alt="Barbara Chertier" 
+              className="w-full h-full object-cover"
+            />
           </div>
         </div>
       </div>
       
+      {/* Scroll Down Button */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-        <a href="#about">
-          <svg 
-            xmlns="http://www.w3.org/2000/svg" 
-            width="24" 
-            height="24" 
-            viewBox="0 0 24 24" 
-            fill="none" 
-            stroke="currentColor" 
-            strokeWidth="2" 
-            strokeLinecap="round" 
-            strokeLinejoin="round" 
-            className="text-offwhite"
-          >
-            <line x1="12" y1="5" x2="12" y2="19"></line>
-            <polyline points="19 12 12 19 5 12"></polyline>
-          </svg>
+        <a 
+          href="#about" 
+          className="flex flex-col items-center text-gray-500 hover:text-gray-800 transition-colors"
+          aria-label="Scroll to About section"
+        >
+          <span className="text-sm mb-2">Scroll Down</span>
+          <ChevronDown size={24} />
         </a>
       </div>
     </section>
