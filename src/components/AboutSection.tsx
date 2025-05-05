@@ -1,9 +1,11 @@
 
 import { useEffect, useRef, useState } from 'react';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const AboutSection = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -39,17 +41,16 @@ const AboutSection = () => {
       >
         {/* About Content */}
         <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-8'}`}>
-          <span className="text-pink-dark font-medium">About Me</span>
-          <h2 className="section-title mt-2">Creative Vision, Digital Expertise</h2>
+          <span className="text-pink-dark font-medium">{t('about.subtitle')}</span>
+          <h2 className="section-title mt-2">{t('about.title')}</h2>
           <div className="space-y-4">
-            <p className="text-muted-foreground">
-              As a passionate communication specialist based in Bessan, France, I blend creative design with strategic digital marketing to create compelling stories and impactful campaigns.
-            </p>
-            <p className="text-muted-foreground">
-              With extensive experience in graphic design, video production, and community management, I help brands connect with their audiences through authentic storytelling and beautiful visuals.
-            </p>
-            <p className="text-muted-foreground">
-              My approach combines artistic vision with analytical thinking, allowing me to develop communications that are both creative and effective.
+            {t('about.bio').split('\n\n').map((paragraph, index) => (
+              <p key={index} className="text-muted-foreground">
+                {paragraph}
+              </p>
+            ))}
+            <p className="text-muted-foreground font-medium mt-4">
+              {t('about.languages')}
             </p>
           </div>
           
@@ -64,7 +65,7 @@ const AboutSection = () => {
           <div className="relative">
             <div className="absolute -top-4 -left-4 w-full h-full border-2 border-pink-light"></div>
             <img 
-              src="https://images.unsplash.com/photo-1649972904349-6e44c42644a7?ixlib=rb-4.0.3" 
+              src="/lovable-uploads/f105f36c-6519-44b3-8d47-6381c3642ac7.png" 
               alt="Barbara Chertier" 
               className="w-full h-auto object-cover"
             />

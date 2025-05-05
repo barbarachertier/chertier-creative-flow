@@ -1,10 +1,13 @@
 
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
+import LanguageSwitcher from "./LanguageSwitcher";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,51 +39,60 @@ const Navbar = () => {
         </a>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex space-x-10">
-          <a href="#about" className="hover:text-pink-dark transition-colors">
-            About
-          </a>
-          <a href="#experience" className="hover:text-pink-dark transition-colors">
-            Experience
-          </a>
-          <a href="#skills" className="hover:text-pink-dark transition-colors">
-            Skills
-          </a>
-          <a href="#portfolio" className="hover:text-pink-dark transition-colors">
-            Portfolio
-          </a>
-          <a href="#contact" className="hover:text-pink-dark transition-colors">
-            Contact
-          </a>
+        <div className="hidden md:flex items-center space-x-6">
+          <div className="flex space-x-6">
+            <a href="#about" className="hover:text-pink-dark transition-colors">
+              {t('nav.about')}
+            </a>
+            <a href="#experience" className="hover:text-pink-dark transition-colors">
+              {t('nav.experience')}
+            </a>
+            <a href="#skills" className="hover:text-pink-dark transition-colors">
+              {t('nav.skills')}
+            </a>
+            <a href="#portfolio" className="hover:text-pink-dark transition-colors">
+              {t('nav.portfolio')}
+            </a>
+            <a href="#contact" className="hover:text-pink-dark transition-colors">
+              {t('nav.contact')}
+            </a>
+          </div>
+          
+          <div className="h-6 border-l border-gray-300 mx-2"></div>
+          
+          <LanguageSwitcher />
         </div>
 
         {/* Mobile Menu Button */}
-        <button
-          className="md:hidden"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          <div className="w-6 flex flex-col items-end gap-1.5">
-            <span
-              className={cn(
-                "h-0.5 bg-foreground transition-all",
-                mobileMenuOpen ? "w-6 -rotate-45 translate-y-2" : "w-6"
-              )}
-            ></span>
-            <span
-              className={cn(
-                "h-0.5 bg-foreground transition-all",
-                mobileMenuOpen ? "opacity-0" : "w-4"
-              )}
-            ></span>
-            <span
-              className={cn(
-                "h-0.5 bg-foreground transition-all",
-                mobileMenuOpen ? "w-6 rotate-45 -translate-y-2" : "w-5"
-              )}
-            ></span>
-          </div>
-        </button>
+        <div className="md:hidden flex items-center gap-4">
+          <LanguageSwitcher />
+          
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            <div className="w-6 flex flex-col items-end gap-1.5">
+              <span
+                className={cn(
+                  "h-0.5 bg-foreground transition-all",
+                  mobileMenuOpen ? "w-6 -rotate-45 translate-y-2" : "w-6"
+                )}
+              ></span>
+              <span
+                className={cn(
+                  "h-0.5 bg-foreground transition-all",
+                  mobileMenuOpen ? "opacity-0" : "w-4"
+                )}
+              ></span>
+              <span
+                className={cn(
+                  "h-0.5 bg-foreground transition-all",
+                  mobileMenuOpen ? "w-6 rotate-45 -translate-y-2" : "w-5"
+                )}
+              ></span>
+            </div>
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}
@@ -96,35 +108,35 @@ const Navbar = () => {
             className="hover:text-pink-dark transition-colors"
             onClick={() => setMobileMenuOpen(false)}
           >
-            About
+            {t('nav.about')}
           </a>
           <a
             href="#experience"
             className="hover:text-pink-dark transition-colors"
             onClick={() => setMobileMenuOpen(false)}
           >
-            Experience
+            {t('nav.experience')}
           </a>
           <a
             href="#skills"
             className="hover:text-pink-dark transition-colors"
             onClick={() => setMobileMenuOpen(false)}
           >
-            Skills
+            {t('nav.skills')}
           </a>
           <a
             href="#portfolio"
             className="hover:text-pink-dark transition-colors"
             onClick={() => setMobileMenuOpen(false)}
           >
-            Portfolio
+            {t('nav.portfolio')}
           </a>
           <a
             href="#contact"
             className="hover:text-pink-dark transition-colors"
             onClick={() => setMobileMenuOpen(false)}
           >
-            Contact
+            {t('nav.contact')}
           </a>
         </div>
       </div>

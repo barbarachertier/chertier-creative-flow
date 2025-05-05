@@ -1,6 +1,8 @@
+
 import { useState, useEffect, useRef } from 'react';
 import { Dialog, DialogContent, DialogClose } from "@/components/ui/dialog";
 import { cn } from '@/lib/utils';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface Project {
   id: number;
@@ -12,72 +14,99 @@ interface Project {
   videoUrl?: string;
 }
 
-const projects: Project[] = [
-  {
-    id: 1,
-    title: "Brand Identity Design",
-    description: "Complete visual identity for an eco-friendly fashion brand including logo, color palette, and brand guidelines.",
-    category: "design",
-    image: "https://images.unsplash.com/photo-1605908502724-9093a79a1b39?ixlib=rb-4.0.3",
-    type: "image"
-  },
-  {
-    id: 2,
-    title: "Product Launch Campaign",
-    description: "Integrated marketing campaign for a tech startup's product launch, including social media content and promotional materials.",
-    category: "marketing",
-    image: "https://images.unsplash.com/photo-1583673354352-9f4e86f8efaf?ixlib=rb-4.0.3",
-    type: "image"
-  },
-  {
-    id: 3,
-    title: "Corporate Video Production",
-    description: "Promotional video showcasing company culture and values for a corporate client.",
-    category: "video",
-    image: "https://images.unsplash.com/photo-1605810230434-7631ac76ec81?ixlib=rb-4.0.3",
-    type: "video",
-    videoUrl: "https://example.com/video1.mp4"
-  },
-  {
-    id: 4,
-    title: "Editorial Design",
-    description: "Magazine layout and editorial design for a lifestyle publication focusing on sustainable living.",
-    category: "design",
-    image: "https://images.unsplash.com/photo-1596265371388-43edbaadab94?ixlib=rb-4.0.3",
-    type: "image"
-  },
-  {
-    id: 5,
-    title: "Social Media Campaign",
-    description: "Engaging content series for a food brand's social media channels, resulting in 40% engagement increase.",
-    category: "marketing",
-    image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?ixlib=rb-4.0.3",
-    type: "image"
-  },
-  {
-    id: 6,
-    title: "Motion Graphics Explainer",
-    description: "Animated explainer video simplifying complex concepts for an educational platform.",
-    category: "video",
-    image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?ixlib=rb-4.0.3",
-    type: "video",
-    videoUrl: "https://example.com/video2.mp4"
-  }
-];
-
-const categories = [
-  { id: "all", name: "All Projects" },
-  { id: "design", name: "Graphic Design" },
-  { id: "marketing", name: "Marketing" },
-  { id: "video", name: "Video" },
-];
-
 const PortfolioSection = () => {
+  const { t, language } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const [visibleProjects, setVisibleProjects] = useState<Project[]>(projects);
+  const [visibleProjects, setVisibleProjects] = useState<Project[]>([]);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+
+  const projects: Project[] = [
+    {
+      id: 1,
+      title: language === 'en' ? "Doomli Branding" : "Image de marque Doomli",
+      description: language === 'en' ? "Complete branding and marketing materials for a mobile dog grooming service." : "Image de marque complète et supports marketing pour un service mobile de toilettage canin.",
+      category: "logo",
+      image: "/lovable-uploads/b51fcd75-4628-4a5a-9f9b-a8d4935922b5.png",
+      type: "image"
+    },
+    {
+      id: 2,
+      title: language === 'en' ? "Doomli Vehicle Design" : "Design véhicule Doomli",
+      description: language === 'en' ? "Complete vehicle wrap design for the mobile dog grooming service Doomli." : "Design complet d'habillage de véhicule pour le service mobile de toilettage canin Doomli.",
+      category: "bigprojects",
+      image: "/lovable-uploads/3faf1bca-41d0-4c70-acad-49caa5c1ec97.png",
+      type: "image"
+    },
+    {
+      id: 3,
+      title: language === 'en' ? "Plantnet App Poster" : "Affiche application Plantnet",
+      description: language === 'en' ? "Promotional poster design for the Plantnet plant identification application." : "Conception d'affiche promotionnelle pour l'application d'identification de plantes Plantnet.",
+      category: "print",
+      image: "/lovable-uploads/c5c88852-a236-4fa2-a485-d25f3f342642.png",
+      type: "image"
+    },
+    {
+      id: 4,
+      title: language === 'en' ? "5 Etoiles Luxury Rentals" : "5 Étoiles Locations de Luxe",
+      description: language === 'en' ? "Business card and branding design for a luxury vacation rental company." : "Conception de carte de visite et d'image de marque pour une entreprise de location de vacances de luxe.",
+      category: "print",
+      image: "/lovable-uploads/82366a6d-2181-41b8-bc29-cdcc6ff88927.png",
+      type: "image"
+    },
+    {
+      id: 5,
+      title: language === 'en' ? "Social Media Campaign" : "Campagne sur les réseaux sociaux",
+      description: language === 'en' ? "Series of advertisements for Doomli's social media channels, highlighting the service's unique value proposition." : "Série de publicités pour les canaux de médias sociaux de Doomli, mettant en évidence la proposition de valeur unique du service.",
+      category: "social",
+      image: "/lovable-uploads/09297029-307e-48b4-8690-e7f78fc6316a.png",
+      type: "image"
+    },
+    {
+      id: 6,
+      title: language === 'en' ? "ARC App UI Design" : "Design d'interface utilisateur pour l'application ARC",
+      description: language === 'en' ? "User interface design for a social networking mobile application." : "Conception d'interface utilisateur pour une application mobile de réseautage social.",
+      category: "ux",
+      image: "/lovable-uploads/2824f814-bcd0-43e2-8037-8081d710ad0a.png",
+      type: "image"
+    },
+    {
+      id: 7,
+      title: language === 'en' ? "Echo 2 Pros Magazine" : "Magazine Echo 2 Pros",
+      description: language === 'en' ? "Editorial design and layout for a professional business magazine." : "Conception éditoriale et mise en page pour un magazine d'affaires professionnel.",
+      category: "print",
+      image: "/lovable-uploads/c3702d18-39df-4c7d-a3ad-8643598ea5fb.png",
+      type: "image"
+    },
+    {
+      id: 8,
+      title: language === 'en' ? "STORViX Company Infographic" : "Infographie d'entreprise STORViX",
+      description: language === 'en' ? "Informational graphic explaining the company history and product offerings for a data storage company." : "Graphique informatif expliquant l'histoire de l'entreprise et les offres de produits pour une entreprise de stockage de données.",
+      category: "print",
+      image: "/lovable-uploads/a57a9b3b-ea4e-4350-b0ab-411ec7939505.png",
+      type: "image"
+    },
+    {
+      id: 9,
+      title: language === 'en' ? "Baba au Rhum Logo Design" : "Design de logo Baba au Rhum",
+      description: language === 'en' ? "Logo design for a pastry brand with a playful and elegant aesthetic." : "Conception de logo pour une marque de pâtisserie avec une esthétique ludique et élégante.",
+      category: "logo",
+      image: "/lovable-uploads/4cfad69e-a457-46a8-948d-b9230a870d8f.png",
+      type: "image"
+    }
+  ];
+
+  const categories = [
+    { id: "all", name: t('portfolio.category.all') },
+    { id: "video", name: t('portfolio.category.video') },
+    { id: "logo", name: t('portfolio.category.logo') },
+    { id: "print", name: t('portfolio.category.print') },
+    { id: "bigprojects", name: t('portfolio.category.bigprojects') },
+    { id: "motion", name: t('portfolio.category.motion') },
+    { id: "ux", name: t('portfolio.category.ux') },
+    { id: "social", name: t('portfolio.category.social') },
+  ];
 
   useEffect(() => {
     const filteredProjects = selectedCategory === "all" 
@@ -85,7 +114,7 @@ const PortfolioSection = () => {
       : projects.filter(project => project.category === selectedCategory);
     
     setVisibleProjects(filteredProjects);
-  }, [selectedCategory]);
+  }, [selectedCategory, language]);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -119,8 +148,8 @@ const PortfolioSection = () => {
         ref={sectionRef}
         className="section-container"
       >
-        <span className={`text-pink-dark font-medium block transition-all duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>My Work</span>
-        <h2 className={`section-title mt-2 transition-all duration-700 delay-100 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>Portfolio</h2>
+        <span className={`text-pink-dark font-medium block transition-all duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>{t('portfolio.subtitle')}</span>
+        <h2 className={`section-title mt-2 transition-all duration-700 delay-100 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>{t('portfolio.title')}</h2>
         
         {/* Categories filter */}
         <div className={`flex flex-wrap gap-2 mb-10 transition-all duration-700 delay-200 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
@@ -161,7 +190,7 @@ const PortfolioSection = () => {
                 <div className="absolute inset-0 bg-primary/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <div className="text-center p-4">
                     <h3 className="text-lg font-medium text-offwhite mb-1">{project.title}</h3>
-                    <p className="text-sm text-offwhite/80">View Project</p>
+                    <p className="text-sm text-offwhite/80">{language === 'en' ? "View Project" : "Voir le projet"}</p>
                   </div>
                 </div>
                 
@@ -209,7 +238,7 @@ const PortfolioSection = () => {
               <line x1="18" y1="6" x2="6" y2="18"></line>
               <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
-            <span className="sr-only">Close</span>
+            <span className="sr-only">{language === 'en' ? "Close" : "Fermer"}</span>
           </DialogClose>
           
           {selectedProject && (
@@ -223,7 +252,7 @@ const PortfolioSection = () => {
                   />
                 ) : (
                   <div className="aspect-video bg-black rounded-md flex items-center justify-center">
-                    <p className="text-white">Video preview placeholder</p>
+                    <p className="text-white">{language === 'en' ? "Video preview placeholder" : "Aperçu vidéo"}</p>
                   </div>
                 )}
               </div>
@@ -232,9 +261,13 @@ const PortfolioSection = () => {
                 <p className="text-muted-foreground mb-4">{selectedProject.description}</p>
                 <div className="flex items-center gap-2 text-sm">
                   <span className="bg-pink-light px-3 py-1 rounded-full">
-                    {selectedProject.category === 'design' && 'Graphic Design'}
-                    {selectedProject.category === 'marketing' && 'Marketing'}
-                    {selectedProject.category === 'video' && 'Video Production'}
+                    {selectedProject.category === 'logo' && (language === 'en' ? 'Logo Design' : 'Design de logo')}
+                    {selectedProject.category === 'video' && (language === 'en' ? 'Video' : 'Vidéo')}
+                    {selectedProject.category === 'print' && 'Print'}
+                    {selectedProject.category === 'bigprojects' && (language === 'en' ? 'Big Projects' : 'Grands Projets')}
+                    {selectedProject.category === 'motion' && 'Motion Design'}
+                    {selectedProject.category === 'ux' && 'UX/UI'}
+                    {selectedProject.category === 'social' && (language === 'en' ? 'Social Media' : 'Réseaux Sociaux')}
                   </span>
                 </div>
               </div>

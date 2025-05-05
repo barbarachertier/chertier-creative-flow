@@ -1,6 +1,8 @@
+
 import { useState, useEffect, useRef } from 'react';
 import { Star } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface Skill {
   id: number;
@@ -9,79 +11,82 @@ interface Skill {
   category: string;
 }
 
-const skills: Skill[] = [
-  {
-    id: 1,
-    name: "Graphic Design",
-    proficiency: 95,
-    category: "design"
-  },
-  {
-    id: 2,
-    name: "Video Production",
-    proficiency: 90,
-    category: "production"
-  },
-  {
-    id: 3,
-    name: "Adobe Creative Suite",
-    proficiency: 90,
-    category: "tools"
-  },
-  {
-    id: 4,
-    name: "Social Media Strategy",
-    proficiency: 85,
-    category: "marketing"
-  },
-  {
-    id: 5,
-    name: "Content Writing",
-    proficiency: 80,
-    category: "content"
-  },
-  {
-    id: 6,
-    name: "SEO",
-    proficiency: 75,
-    category: "marketing"
-  },
-  {
-    id: 7,
-    name: "Motion Graphics",
-    proficiency: 85,
-    category: "design"
-  },
-  {
-    id: 8,
-    name: "Community Management",
-    proficiency: 90,
-    category: "marketing"
-  },
-  {
-    id: 9,
-    name: "Digital Marketing",
-    proficiency: 85,
-    category: "marketing"
-  }
-];
-
-const categories = [
-  { id: "all", name: "All Skills" },
-  { id: "design", name: "Design" },
-  { id: "marketing", name: "Marketing" },
-  { id: "content", name: "Content" },
-  { id: "tools", name: "Tools" },
-  { id: "production", name: "Production" },
-];
-
 const SkillsSection = () => {
+  const { t, language } = useLanguage();
   const [selectedCategory, setSelectedCategory] = useState("all");
-  const [visibleSkills, setVisibleSkills] = useState<Skill[]>(skills);
+  const [visibleSkills, setVisibleSkills] = useState<Skill[]>([]);
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [animatedSkills, setAnimatedSkills] = useState<number[]>([]);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
+
+  const skills: Skill[] = [
+    {
+      id: 1,
+      name: language === 'en' ? "Teamwork" : "Travail en équipe",
+      proficiency: 100,
+      category: "teamwork"
+    },
+    {
+      id: 2,
+      name: language === 'en' ? "Social Media Management" : "Gestion des réseaux sociaux",
+      proficiency: 90,
+      category: "social"
+    },
+    {
+      id: 3,
+      name: language === 'en' ? "Data Analysis" : "Analyse de données",
+      proficiency: 65,
+      category: "data"
+    },
+    {
+      id: 4,
+      name: language === 'en' ? "Visual Creation" : "Création visuelle",
+      proficiency: 80,
+      category: "visual"
+    },
+    {
+      id: 5,
+      name: language === 'en' ? "Video Creation" : "Création vidéo",
+      proficiency: 80,
+      category: "video"
+    },
+    {
+      id: 6,
+      name: "SEO",
+      proficiency: 70,
+      category: "seo"
+    },
+    {
+      id: 7,
+      name: language === 'en' ? "Content Writing" : "Rédaction de contenu",
+      proficiency: 80,
+      category: "writing"
+    },
+    {
+      id: 8,
+      name: "Adobe Creative Suite",
+      proficiency: 85,
+      category: "tools"
+    },
+    {
+      id: 9,
+      name: language === 'en' ? "Marketing Strategy" : "Stratégie Marketing",
+      proficiency: 75,
+      category: "marketing"
+    }
+  ];
+
+  const categories = [
+    { id: "all", name: t('skills.category.all') },
+    { id: "teamwork", name: t('skills.category.teamwork') },
+    { id: "social", name: t('skills.category.social') },
+    { id: "data", name: t('skills.category.data') },
+    { id: "visual", name: t('skills.category.visual') },
+    { id: "video", name: t('skills.category.video') },
+    { id: "seo", name: t('skills.category.seo') },
+    { id: "writing", name: t('skills.category.writing') },
+  ];
 
   // Filter skills when category changes
   useEffect(() => {
@@ -101,10 +106,10 @@ const SkillsSection = () => {
     }
     
     // If section is already visible, start animating the new skills
-    if (isVisible) {
+    if (isVisible && filteredSkills.length > 0) {
       startSkillsAnimation(filteredSkills);
     }
-  }, [selectedCategory]);
+  }, [selectedCategory, language]);
 
   // Handle section visibility
   useEffect(() => {
@@ -135,7 +140,7 @@ const SkillsSection = () => {
 
   // Start animation when section becomes visible
   useEffect(() => {
-    if (isVisible) {
+    if (isVisible && visibleSkills.length > 0) {
       startSkillsAnimation(visibleSkills);
     }
     
@@ -145,7 +150,7 @@ const SkillsSection = () => {
         clearInterval(intervalRef.current);
       }
     };
-  }, [isVisible]);
+  }, [isVisible, visibleSkills]);
 
   // Helper function to start skills animation
   const startSkillsAnimation = (skills: Skill[]) => {
@@ -189,8 +194,8 @@ const SkillsSection = () => {
         ref={sectionRef}
         className="section-container"
       >
-        <span className={`text-pink-dark font-medium block transition-all duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>Expertise</span>
-        <h2 className={`section-title mt-2 transition-all duration-700 delay-100 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>Skills & Proficiencies</h2>
+        <span className={`text-pink-dark font-medium block transition-all duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>{t('skills.subtitle')}</span>
+        <h2 className={`section-title mt-2 transition-all duration-700 delay-100 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>{t('skills.title')}</h2>
         
         {/* Categories filter */}
         <div className={`flex flex-wrap gap-2 mb-10 transition-all duration-700 delay-200 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>

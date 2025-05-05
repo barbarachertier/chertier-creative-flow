@@ -2,9 +2,11 @@
 import { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import { ChevronDown } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const HeroSection = () => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     // Simulate loading delay
@@ -29,13 +31,13 @@ const HeroSection = () => {
             className={`text-4xl md:text-5xl font-playfair font-medium text-[#4A4A4A] mb-6 
               transition-all duration-1000 ease-out ${isLoaded ? 'opacity-100' : 'opacity-0 translate-y-8'}`}
           >
-            Hi, I'm Barbara <span className="inline-block animate-bounce ml-2">👋</span>
+            {t('hero.greeting')} <span className="inline-block animate-bounce ml-2">👋</span>
           </h1>
           <p 
             className={`text-lg md:text-xl text-gray-600 mb-8 leading-relaxed transition-all duration-1000 delay-300 ease-out
               ${isLoaded ? 'opacity-100' : 'opacity-0 translate-y-8'}`}
           >
-            Creative Digital Communication Specialist with a spark for design, video & storytelling. I turn ideas into eye-catching content with purpose and passion.
+            {t('hero.title')}
           </p>
           <div 
             className={`transition-all duration-1000 delay-500 ease-out
@@ -45,7 +47,7 @@ const HeroSection = () => {
               className="px-8 py-6 rounded-full bg-gradient-to-r from-pink-200 to-pink-300 hover:from-pink-300 hover:to-pink-400 text-white font-medium text-lg transform transition-all hover:scale-105 hover:shadow-lg"
               onClick={() => document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              Explore My Portfolio
+              {t('hero.cta')}
             </Button>
           </div>
         </div>
@@ -54,7 +56,7 @@ const HeroSection = () => {
         <div className={`flex justify-center items-center order-1 lg:order-2 transition-all duration-1000 delay-300 ease-out ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
           <div className="relative rounded-full overflow-hidden shadow-xl w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96">
             <img 
-              src="/lovable-uploads/ed311d7e-00fe-4aca-b901-4b84d532eed8.png" 
+              src="/lovable-uploads/1769a467-f115-4a4b-a04d-7924ad5fa1c5.png" 
               alt="Barbara Chertier" 
               className="w-full h-full object-cover"
             />
@@ -69,7 +71,7 @@ const HeroSection = () => {
           className="flex flex-col items-center text-gray-500 hover:text-gray-800 transition-colors"
           aria-label="Scroll to About section"
         >
-          <span className="text-sm mb-2">Scroll Down</span>
+          <span className="text-sm mb-2">{t('hero.scroll')}</span>
           <ChevronDown size={24} />
         </a>
       </div>

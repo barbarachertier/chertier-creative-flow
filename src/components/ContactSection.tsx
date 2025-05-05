@@ -1,7 +1,8 @@
 
 import { useState, useEffect, useRef } from 'react';
-import { Phone, Mail, Linkedin, Instagram } from 'lucide-react';
+import { Phone, Mail, Linkedin, MapPin } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const ContactSection = () => {
   const [formState, setFormState] = useState({
@@ -14,6 +15,7 @@ const ContactSection = () => {
 
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const { t, language } = useLanguage();
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -75,8 +77,8 @@ const ContactSection = () => {
         ref={sectionRef}
         className="section-container"
       >
-        <span className={`text-pink-dark font-medium block transition-all duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>Get in Touch</span>
-        <h2 className={`section-title mt-2 transition-all duration-700 delay-100 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>Contact</h2>
+        <span className={`text-pink-dark font-medium block transition-all duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>{t('contact.subtitle')}</span>
+        <h2 className={`section-title mt-2 transition-all duration-700 delay-100 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>{t('contact.title')}</h2>
         
         <div className="grid md:grid-cols-2 gap-12 lg:gap-20">
           {/* Contact Form */}
@@ -84,14 +86,14 @@ const ContactSection = () => {
             <form onSubmit={handleSubmit} className="space-y-6">
               {isSubmitted ? (
                 <div className="bg-pink-light/50 border border-pink-DEFAULT p-4 rounded-lg text-center">
-                  <p className="font-medium text-primary">Thank you for your message!</p>
-                  <p className="text-sm text-muted-foreground mt-1">I'll be in touch with you shortly.</p>
+                  <p className="font-medium text-primary">{t('contact.success')}</p>
+                  <p className="text-sm text-muted-foreground mt-1">{t('contact.successDetail')}</p>
                 </div>
               ) : (
                 <>
                   <div>
                     <label htmlFor="name" className="block text-sm font-medium mb-2">
-                      Name
+                      {t('contact.name')}
                     </label>
                     <input
                       type="text"
@@ -106,7 +108,7 @@ const ContactSection = () => {
                   
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium mb-2">
-                      Email
+                      {t('contact.email')}
                     </label>
                     <input
                       type="email"
@@ -121,7 +123,7 @@ const ContactSection = () => {
                   
                   <div>
                     <label htmlFor="message" className="block text-sm font-medium mb-2">
-                      Message
+                      {t('contact.message')}
                     </label>
                     <textarea
                       id="message"
@@ -145,7 +147,7 @@ const ContactSection = () => {
                           : "bg-pink-DEFAULT hover:bg-pink-dark text-offwhite"
                       )}
                     >
-                      {isSubmitting ? "Sending..." : "Send Message"}
+                      {isSubmitting ? t('contact.sending') : t('contact.send')}
                     </button>
                   </div>
                 </>
@@ -157,32 +159,18 @@ const ContactSection = () => {
           <div className={`transition-all duration-700 delay-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
             <div className="space-y-6">
               <p className="text-muted-foreground">
-                I'm always interested in new projects and collaborations. Whether you have a question or just want to say hi, I'll try my best to get back to you as soon as possible.
+                {t('contact.intro')}
               </p>
               
               <div className="space-y-4 mt-8">
                 {/* Location */}
                 <div className="flex items-start gap-4">
                   <div className="bg-pink-light w-10 h-10 rounded-full flex items-center justify-center mt-1">
-                    <svg 
-                      xmlns="http://www.w3.org/2000/svg" 
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      strokeWidth="2" 
-                      strokeLinecap="round" 
-                      strokeLinejoin="round" 
-                      className="text-primary"
-                    >
-                      <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
-                      <circle cx="12" cy="10" r="3"></circle>
-                    </svg>
+                    <MapPin className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-medium">Location</h3>
-                    <p className="text-muted-foreground">Bessan, France</p>
+                    <h3 className="font-medium">{t('contact.location')}</h3>
+                    <p className="text-muted-foreground">28 chemin de la renga, 34550 Bessan, France</p>
                   </div>
                 </div>
                 
@@ -193,8 +181,8 @@ const ContactSection = () => {
                   </div>
                   <div>
                     <h3 className="font-medium">Email</h3>
-                    <a href="mailto:barbara@example.com" className="text-muted-foreground hover:text-primary transition-colors">
-                      barbara@example.com
+                    <a href="mailto:barbarachertier1@gmail.com" className="text-muted-foreground hover:text-primary transition-colors">
+                      barbarachertier1@gmail.com
                     </a>
                   </div>
                 </div>
@@ -205,9 +193,9 @@ const ContactSection = () => {
                     <Phone className="w-5 h-5 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-medium">Phone</h3>
-                    <a href="tel:+33600000000" className="text-muted-foreground hover:text-primary transition-colors">
-                      +33 6 00 00 00 00
+                    <h3 className="font-medium">{language === 'en' ? "Phone" : "Téléphone"}</h3>
+                    <a href="tel:+33745226707" className="text-muted-foreground hover:text-primary transition-colors">
+                      +33 7 45 22 67 07
                     </a>
                   </div>
                 </div>
@@ -215,25 +203,16 @@ const ContactSection = () => {
               
               {/* Social Media */}
               <div className="mt-8">
-                <h3 className="font-medium mb-3">Connect with me</h3>
+                <h3 className="font-medium mb-3">{t('contact.connect')}</h3>
                 <div className="flex gap-4">
                   <a 
-                    href="https://linkedin.com/" 
+                    href="https://www.linkedin.com/in/barbara-chertier/" 
                     target="_blank" 
                     rel="noreferrer"
                     className="bg-pink-light hover:bg-pink-DEFAULT transition-colors w-10 h-10 rounded-full flex items-center justify-center"
                   >
                     <Linkedin className="w-5 h-5 text-primary" />
                     <span className="sr-only">LinkedIn</span>
-                  </a>
-                  <a 
-                    href="https://instagram.com/" 
-                    target="_blank" 
-                    rel="noreferrer"
-                    className="bg-pink-light hover:bg-pink-DEFAULT transition-colors w-10 h-10 rounded-full flex items-center justify-center"
-                  >
-                    <Instagram className="w-5 h-5 text-primary" />
-                    <span className="sr-only">Instagram</span>
                   </a>
                 </div>
               </div>
