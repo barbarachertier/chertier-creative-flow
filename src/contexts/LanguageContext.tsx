@@ -20,7 +20,7 @@ const translations = {
     
     // Hero section
     'hero.greeting': "Hi, I'm Barbara",
-    'hero.title': 'Creative Digital Communication Specialist with a spark for design, video & storytelling. I turn ideas into eye-catching content with purpose and passion.',
+    'hero.title': 'Creative Digital Communication Specialist with a spark for design, video & storytelling. I turn ideas into eye-catching content with purpose and passion <3.',
     'hero.cta': 'Explore My Portfolio',
     'hero.scroll': 'Scroll Down',
     
