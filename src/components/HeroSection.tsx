@@ -6,6 +6,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 
 const HeroSection = () => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const { t } = useLanguage();
 
   useEffect(() => {
@@ -14,7 +15,20 @@ const HeroSection = () => {
       setIsLoaded(true);
     }, 300);
 
-    return () => clearTimeout(timer);
+    const handleScroll = () => {
+      if (window.scrollY > 50) {
+        setScrolled(true);
+      } else {
+        setScrolled(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   return (
@@ -54,7 +68,8 @@ const HeroSection = () => {
         
         {/* Right Column - Portrait Image (using the green background image) */}
         <div className={`flex justify-center items-center order-1 lg:order-2 transition-all duration-1000 delay-300 ease-out ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
-          <div className="relative rounded-full overflow-hidden shadow-xl w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96">
+          <div className="relative rounded-full overflow-hidden shadow-xl w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 hover:scale-[1.02] transition-all duration-500 ease-in-out">
+            <div className="absolute inset-0 bg-gradient-to-t from-pink-300/50 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
             <img 
               src="/lovable-uploads/f105f36c-6519-44b3-8d47-6381c3642ac7.png" 
               alt="Barbara Chertier" 
@@ -65,10 +80,10 @@ const HeroSection = () => {
       </div>
       
       {/* Scroll Down Button */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+      <div className={`absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce transition-opacity duration-500 ${scrolled ? 'opacity-0' : 'opacity-100'}`}>
         <a 
           href="#about" 
-          className="flex flex-col items-center text-gray-500 hover:text-gray-800 transition-colors"
+          className="flex flex-col items-center text-gray-500 hover:text-pink-DEFAULT transition-colors"
           aria-label="Scroll to About section"
         >
           <span className="text-sm mb-2">{t('hero.scroll')}</span>

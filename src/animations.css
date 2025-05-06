@@ -1,0 +1,70 @@
+
+/* Portfolio hover effects */
+.portfolio-item {
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.portfolio-item:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px -5px rgba(248, 187, 208, 0.4);
+}
+
+.portfolio-item:hover .portfolio-overlay {
+  opacity: 1;
+}
+
+/* Enhanced animations for scroll reveal */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.stagger-item {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hover glow effects */
+.hover-glow:hover {
+  box-shadow: 0 0 15px rgba(248, 187, 208, 0.7);
+}
+
+/* Custom animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.7s ease-out forwards;
+}
+
+/* Parallax effect classes */
+.parallax {
+  transition: transform 0.3s cubic-bezier(0.2, 0, 0.8, 1);
+}
+
+.parallax-slow {
+  transform: translateY(calc(var(--scroll-y, 0) * -0.1px));
+}
+
+.parallax-medium {
+  transform: translateY(calc(var(--scroll-y, 0) * -0.15px));
+}
+
+.parallax-fast {
+  transform: translateY(calc(var(--scroll-y, 0) * -0.2px));
+}

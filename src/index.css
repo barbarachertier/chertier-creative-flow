@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+@import './animations.css';
 
 @tailwind base;
 @tailwind components;
@@ -74,6 +75,15 @@
   
   .revealed {
     @apply opacity-100 translate-y-0;
+  }
+
+  /* Enhanced portfolio item styling */
+  .portfolio-item {
+    @apply cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-xl rounded-lg overflow-hidden;
+  }
+  
+  .portfolio-overlay {
+    @apply absolute inset-0 bg-primary/70 flex items-center justify-center opacity-0 transition-opacity duration-300;
   }
 }
 
