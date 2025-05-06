@@ -1,11 +1,13 @@
 
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Globe } from "lucide-react";
 
 const LanguageSwitcher = () => {
   const { language, setLanguage } = useLanguage();
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm rounded-full px-2 py-1 shadow-sm">
+      <Globe className="w-4 h-4 text-pink-DEFAULT" />
       <button
         className={`text-sm px-2 py-1 rounded-md transition-colors ${
           language === "en" 

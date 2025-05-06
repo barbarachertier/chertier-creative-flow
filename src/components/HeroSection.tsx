@@ -52,11 +52,11 @@ const HeroSection = () => {
           </div>
         </div>
         
-        {/* Right Column - Portrait Image */}
+        {/* Right Column - Portrait Image (using the green background image) */}
         <div className={`flex justify-center items-center order-1 lg:order-2 transition-all duration-1000 delay-300 ease-out ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
           <div className="relative rounded-full overflow-hidden shadow-xl w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96">
             <img 
-              src="/lovable-uploads/1769a467-f115-4a4b-a04d-7924ad5fa1c5.png" 
+              src="/lovable-uploads/f105f36c-6519-44b3-8d47-6381c3642ac7.png" 
               alt="Barbara Chertier" 
               className="w-full h-full object-cover"
             />

@@ -1,14 +1,16 @@
 
 import { useState, useEffect, useRef } from 'react';
-import { Star } from 'lucide-react';
+import { Star, Award, Globe, Code, BarChart, Palette, Video, MessageSquare, Users } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Progress } from "./ui/progress";
 
 interface Skill {
   id: number;
   name: string;
   proficiency: number;
   category: string;
+  icon: React.ReactNode;
 }
 
 const SkillsSection = () => {
@@ -25,55 +27,64 @@ const SkillsSection = () => {
       id: 1,
       name: language === 'en' ? "Teamwork" : "Travail en équipe",
       proficiency: 100,
-      category: "teamwork"
+      category: "teamwork",
+      icon: <Users className="w-5 h-5 text-pink-dark" />
     },
     {
       id: 2,
       name: language === 'en' ? "Social Media Management" : "Gestion des réseaux sociaux",
       proficiency: 90,
-      category: "social"
+      category: "social",
+      icon: <MessageSquare className="w-5 h-5 text-pink-dark" />
     },
     {
       id: 3,
       name: language === 'en' ? "Data Analysis" : "Analyse de données",
       proficiency: 65,
-      category: "data"
+      category: "data",
+      icon: <BarChart className="w-5 h-5 text-pink-dark" />
     },
     {
       id: 4,
       name: language === 'en' ? "Visual Creation" : "Création visuelle",
       proficiency: 80,
-      category: "visual"
+      category: "visual",
+      icon: <Palette className="w-5 h-5 text-pink-dark" />
     },
     {
       id: 5,
       name: language === 'en' ? "Video Creation" : "Création vidéo",
       proficiency: 80,
-      category: "video"
+      category: "video",
+      icon: <Video className="w-5 h-5 text-pink-dark" />
     },
     {
       id: 6,
       name: "SEO",
       proficiency: 70,
-      category: "seo"
+      category: "seo",
+      icon: <Globe className="w-5 h-5 text-pink-dark" />
     },
     {
       id: 7,
       name: language === 'en' ? "Content Writing" : "Rédaction de contenu",
       proficiency: 80,
-      category: "writing"
+      category: "writing",
+      icon: <Code className="w-5 h-5 text-pink-dark" />
     },
     {
       id: 8,
       name: "Adobe Creative Suite",
       proficiency: 85,
-      category: "tools"
+      category: "tools",
+      icon: <Palette className="w-5 h-5 text-pink-dark" />
     },
     {
       id: 9,
       name: language === 'en' ? "Marketing Strategy" : "Stratégie Marketing",
       proficiency: 75,
-      category: "marketing"
+      category: "marketing",
+      icon: <Award className="w-5 h-5 text-pink-dark" />
     }
   ];
 
@@ -226,21 +237,17 @@ const SkillsSection = () => {
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-3">
                   <div className="bg-pink-light w-10 h-10 rounded-full flex items-center justify-center">
-                    <Star className="w-5 h-5 text-pink-dark" />
+                    {skill.icon}
                   </div>
                   <h3 className="font-medium">{skill.name}</h3>
                 </div>
                 <span className="text-sm font-medium">{skill.proficiency}%</span>
               </div>
               
-              <div className="h-2 bg-beige-light rounded-full overflow-hidden">
-                <div 
-                  className="h-full bg-gradient-to-r from-pink-DEFAULT to-pink-dark transition-all duration-1000 ease-out"
-                  style={{ 
-                    width: animatedSkills.includes(skill.id) ? `${skill.proficiency}%` : '0%' 
-                  }}
-                ></div>
-              </div>
+              <Progress 
+                value={animatedSkills.includes(skill.id) ? skill.proficiency : 0}
+                className="h-2 bg-beige-light"
+              />
             </div>
           ))}
         </div>

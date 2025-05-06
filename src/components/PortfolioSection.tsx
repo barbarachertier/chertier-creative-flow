@@ -2,7 +2,15 @@
 import { useState, useEffect, useRef } from 'react';
 import { Dialog, DialogContent, DialogClose } from "@/components/ui/dialog";
 import { cn } from '@/lib/utils';
+import { Image, Video, Layout, Palette, Smartphone, Code, MessageSquare } from 'lucide-react';
 import { useLanguage } from "@/contexts/LanguageContext";
+
+interface Category {
+  id: string;
+  name: string;
+  icon: React.ReactNode;
+  coverImage?: string;
+}
 
 interface Project {
   id: number;
@@ -21,6 +29,56 @@ const PortfolioSection = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+
+  const categories: Category[] = [
+    { 
+      id: "all", 
+      name: t('portfolio.category.all'),
+      icon: <Layout className="w-5 h-5" />
+    },
+    { 
+      id: "video", 
+      name: t('portfolio.category.video'),
+      icon: <Video className="w-5 h-5" />,
+      coverImage: "/lovable-uploads/ed311d7e-00fe-4aca-b901-4b84d532eed8.png"
+    },
+    { 
+      id: "logo", 
+      name: t('portfolio.category.logo'),
+      icon: <Image className="w-5 h-5" />,
+      coverImage: "/lovable-uploads/4cfad69e-a457-46a8-948d-b9230a870d8f.png"
+    },
+    { 
+      id: "print", 
+      name: t('portfolio.category.print'),
+      icon: <Image className="w-5 h-5" />,
+      coverImage: "/lovable-uploads/c3702d18-39df-4c7d-a3ad-8643598ea5fb.png"
+    },
+    { 
+      id: "bigprojects", 
+      name: t('portfolio.category.bigprojects'),
+      icon: <Layout className="w-5 h-5" />,
+      coverImage: "/lovable-uploads/3faf1bca-41d0-4c70-acad-49caa5c1ec97.png"
+    },
+    { 
+      id: "motion", 
+      name: t('portfolio.category.motion'),
+      icon: <Video className="w-5 h-5" />,
+      coverImage: "/lovable-uploads/ed311d7e-00fe-4aca-b901-4b84d532eed8.png"
+    },
+    { 
+      id: "ux", 
+      name: t('portfolio.category.ux'),
+      icon: <Smartphone className="w-5 h-5" />,
+      coverImage: "/lovable-uploads/2824f814-bcd0-43e2-8037-8081d710ad0a.png"
+    },
+    { 
+      id: "social", 
+      name: t('portfolio.category.social'),
+      icon: <MessageSquare className="w-5 h-5" />,
+      coverImage: "/lovable-uploads/09297029-307e-48b4-8690-e7f78fc6316a.png"
+    },
+  ];
 
   const projects: Project[] = [
     {
@@ -97,17 +155,6 @@ const PortfolioSection = () => {
     }
   ];
 
-  const categories = [
-    { id: "all", name: t('portfolio.category.all') },
-    { id: "video", name: t('portfolio.category.video') },
-    { id: "logo", name: t('portfolio.category.logo') },
-    { id: "print", name: t('portfolio.category.print') },
-    { id: "bigprojects", name: t('portfolio.category.bigprojects') },
-    { id: "motion", name: t('portfolio.category.motion') },
-    { id: "ux", name: t('portfolio.category.ux') },
-    { id: "social", name: t('portfolio.category.social') },
-  ];
-
   useEffect(() => {
     const filteredProjects = selectedCategory === "all" 
       ? projects 
@@ -142,6 +189,9 @@ const PortfolioSection = () => {
     };
   }, []);
 
+  // Get the selected category object
+  const currentCategory = categories.find(category => category.id === selectedCategory) || categories[0];
+
   return (
     <section id="portfolio" className="py-20 bg-offwhite">
       <div 
@@ -158,64 +208,85 @@ const PortfolioSection = () => {
               key={category.id}
               onClick={() => setSelectedCategory(category.id)}
               className={cn(
-                "px-4 py-2 text-sm rounded-full transition-all",
+                "px-4 py-2 text-sm rounded-full transition-all flex items-center gap-2",
                 selectedCategory === category.id
                   ? "bg-pink-DEFAULT text-primary-foreground"
                   : "bg-offwhite hover:bg-pink-light text-muted-foreground"
               )}
             >
+              {category.icon}
               {category.name}
             </button>
           ))}
         </div>
         
-        {/* Portfolio grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {visibleProjects.map((project, index) => (
-            <div 
-              key={project.id}
-              className={`group cursor-pointer transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-              style={{ transitionDelay: `${200 + index * 100}ms` }}
-              onClick={() => setSelectedProject(project)}
-            >
-              <div className="relative overflow-hidden rounded-lg">
-                {/* Project image */}
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105"
+        {/* Category header with description and cover image */}
+        {selectedCategory !== 'all' && currentCategory.coverImage && (
+          <div className="mb-10 bg-white rounded-lg overflow-hidden shadow-md">
+            <div className="grid md:grid-cols-2 items-center">
+              <div className="p-6">
+                <h3 className="text-xl font-playfair mb-3">{currentCategory.name}</h3>
+                <p className="text-muted-foreground">
+                  {language === 'en' 
+                    ? `Discover my ${currentCategory.name.toLowerCase()} projects showcasing creativity and professional expertise.`
+                    : `Découvrez mes projets ${currentCategory.name.toLowerCase()} qui mettent en valeur ma créativité et mon expertise professionnelle.`}
+                </p>
+              </div>
+              <div className="h-48 md:h-full">
+                <img 
+                  src={currentCategory.coverImage} 
+                  alt={currentCategory.name}
+                  className="w-full h-full object-cover"
                 />
-                
-                {/* Overlay on hover */}
-                <div className="absolute inset-0 bg-primary/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="text-center p-4">
-                    <h3 className="text-lg font-medium text-offwhite mb-1">{project.title}</h3>
-                    <p className="text-sm text-offwhite/80">{language === 'en' ? "View Project" : "Voir le projet"}</p>
-                  </div>
-                </div>
-                
-                {/* Video indicator */}
-                {project.type === 'video' && (
-                  <div className="absolute bottom-3 right-3 bg-black/70 rounded-full p-2">
-                    <svg 
-                      xmlns="http://www.w3.org/2000/svg" 
-                      width="16" 
-                      height="16" 
-                      viewBox="0 0 24 24" 
-                      fill="none" 
-                      stroke="currentColor" 
-                      strokeWidth="2" 
-                      strokeLinecap="round" 
-                      strokeLinejoin="round" 
-                      className="text-offwhite"
-                    >
-                      <polygon points="5 3 19 12 5 21 5 3"></polygon>
-                    </svg>
-                  </div>
-                )}
               </div>
             </div>
-          ))}
+          </div>
+        )}
+        
+        {/* Portfolio grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {visibleProjects.length > 0 ? (
+            visibleProjects.map((project, index) => (
+              <div 
+                key={project.id}
+                className={`group cursor-pointer transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
+                style={{ transitionDelay: `${200 + index * 100}ms` }}
+                onClick={() => setSelectedProject(project)}
+              >
+                <div className="relative overflow-hidden rounded-lg">
+                  {/* Project image */}
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                  
+                  {/* Overlay on hover */}
+                  <div className="absolute inset-0 bg-primary/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="text-center p-4">
+                      <h3 className="text-lg font-medium text-offwhite mb-1">{project.title}</h3>
+                      <p className="text-sm text-offwhite/80">{language === 'en' ? "View Project" : "Voir le projet"}</p>
+                    </div>
+                  </div>
+                  
+                  {/* Video indicator */}
+                  {project.type === 'video' && (
+                    <div className="absolute bottom-3 right-3 bg-black/70 rounded-full p-2">
+                      <Video className="w-4 h-4 text-offwhite" />
+                    </div>
+                  )}
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="col-span-full text-center py-10">
+              <p className="text-muted-foreground">
+                {language === 'en'
+                  ? "No projects in this category yet. Check back soon!"
+                  : "Pas encore de projets dans cette catégorie. Revenez bientôt !"}
+              </p>
+            </div>
+          )}
         </div>
       </div>
 
@@ -261,13 +332,7 @@ const PortfolioSection = () => {
                 <p className="text-muted-foreground mb-4">{selectedProject.description}</p>
                 <div className="flex items-center gap-2 text-sm">
                   <span className="bg-pink-light px-3 py-1 rounded-full">
-                    {selectedProject.category === 'logo' && (language === 'en' ? 'Logo Design' : 'Design de logo')}
-                    {selectedProject.category === 'video' && (language === 'en' ? 'Video' : 'Vidéo')}
-                    {selectedProject.category === 'print' && 'Print'}
-                    {selectedProject.category === 'bigprojects' && (language === 'en' ? 'Big Projects' : 'Grands Projets')}
-                    {selectedProject.category === 'motion' && 'Motion Design'}
-                    {selectedProject.category === 'ux' && 'UX/UI'}
-                    {selectedProject.category === 'social' && (language === 'en' ? 'Social Media' : 'Réseaux Sociaux')}
+                    {categories.find(cat => cat.id === selectedProject.category)?.name || selectedProject.category}
                   </span>
                 </div>
               </div>
