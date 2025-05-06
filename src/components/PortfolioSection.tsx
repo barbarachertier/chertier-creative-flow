@@ -1,8 +1,10 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { Dialog, DialogContent, DialogClose } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
 import { cn } from '@/lib/utils';
-import { Image, Video, Layout, Palette, Smartphone, Code, MessageSquare } from 'lucide-react';
+import { ArrowRight, Image, Video, Layout, Palette, Smartphone, FileText, Pen, Folder } from 'lucide-react';
 import { useLanguage } from "@/contexts/LanguageContext";
 
 interface Category {
@@ -51,13 +53,13 @@ const PortfolioSection = () => {
     { 
       id: "print", 
       name: t('portfolio.category.print'),
-      icon: <Image className="w-5 h-5" />,
+      icon: <FileText className="w-5 h-5" />,
       coverImage: "/lovable-uploads/c3702d18-39df-4c7d-a3ad-8643598ea5fb.png"
     },
     { 
       id: "bigprojects", 
       name: t('portfolio.category.bigprojects'),
-      icon: <Layout className="w-5 h-5" />,
+      icon: <Folder className="w-5 h-5" />,
       coverImage: "/lovable-uploads/3faf1bca-41d0-4c70-acad-49caa5c1ec97.png"
     },
     { 
@@ -75,7 +77,7 @@ const PortfolioSection = () => {
     { 
       id: "social", 
       name: t('portfolio.category.social'),
-      icon: <MessageSquare className="w-5 h-5" />,
+      icon: <Pen className="w-5 h-5" />,
       coverImage: "/lovable-uploads/09297029-307e-48b4-8690-e7f78fc6316a.png"
     },
   ];
@@ -193,13 +195,17 @@ const PortfolioSection = () => {
   const currentCategory = categories.find(category => category.id === selectedCategory) || categories[0];
 
   return (
-    <section id="portfolio" className="py-20 bg-offwhite">
+    <section id="portfolio" className="py-20 bg-offwhite relative z-10">
       <div 
         ref={sectionRef}
         className="section-container"
       >
-        <span className={`text-pink-dark font-medium block transition-all duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>{t('portfolio.subtitle')}</span>
-        <h2 className={`section-title mt-2 transition-all duration-700 delay-100 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>{t('portfolio.title')}</h2>
+        <span className={`text-pink-dark font-medium block transition-all duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+          {t('portfolio.subtitle')}
+        </span>
+        <h2 className={`section-title mt-2 transition-all duration-700 delay-100 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+          {t('portfolio.title')}
+        </h2>
         
         {/* Categories filter */}
         <div className={`flex flex-wrap gap-2 mb-10 transition-all duration-700 delay-200 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
@@ -208,10 +214,10 @@ const PortfolioSection = () => {
               key={category.id}
               onClick={() => setSelectedCategory(category.id)}
               className={cn(
-                "px-4 py-2 text-sm rounded-full transition-all flex items-center gap-2",
+                "px-4 py-2 text-sm rounded-full transition-all flex items-center gap-2 btn-hover",
                 selectedCategory === category.id
-                  ? "bg-pink-DEFAULT text-primary-foreground"
-                  : "bg-offwhite hover:bg-pink-light text-muted-foreground"
+                  ? "bg-pink-DEFAULT text-primary-foreground shadow-md"
+                  : "bg-white hover:bg-pink-light text-muted-foreground"
               )}
             >
               {category.icon}
@@ -222,7 +228,7 @@ const PortfolioSection = () => {
         
         {/* Category header with description and cover image */}
         {selectedCategory !== 'all' && currentCategory.coverImage && (
-          <div className="mb-10 bg-white rounded-lg overflow-hidden shadow-md">
+          <div className="mb-10 bg-white rounded-lg overflow-hidden shadow-md hover-glow transition-all duration-300">
             <div className="grid md:grid-cols-2 items-center">
               <div className="p-6">
                 <h3 className="text-xl font-playfair mb-3">{currentCategory.name}</h3>
@@ -233,50 +239,58 @@ const PortfolioSection = () => {
                 </p>
               </div>
               <div className="h-48 md:h-full">
-                <img 
-                  src={currentCategory.coverImage} 
-                  alt={currentCategory.name}
-                  className="w-full h-full object-cover"
-                />
+                <div className="thumbnail-container w-full h-full">
+                  <img 
+                    src={currentCategory.coverImage} 
+                    alt={currentCategory.name}
+                    className="thumbnail w-full h-full object-cover"
+                  />
+                </div>
               </div>
             </div>
           </div>
         )}
         
-        {/* Portfolio grid */}
+        {/* Portfolio grid - enhanced with Card component */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {visibleProjects.length > 0 ? (
             visibleProjects.map((project, index) => (
-              <div 
+              <Card 
                 key={project.id}
-                className={`group cursor-pointer transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}
-                style={{ transitionDelay: `${200 + index * 100}ms` }}
+                className={`group portfolio-item border-0 overflow-hidden shadow-md hover-glow bg-white transition-all duration-700 ${
+                  isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                }`}
+                style={{ transitionDelay: `${200 + index * 100}ms`, aspectRatio: '4/3' }}
                 onClick={() => setSelectedProject(project)}
               >
-                <div className="relative overflow-hidden rounded-lg">
-                  {/* Project image */}
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
+                <div className="relative w-full h-full cursor-pointer">
+                  {/* Project image with hover effect */}
+                  <div className="thumbnail-container w-full h-full">
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="thumbnail w-full h-full object-cover"
+                    />
+                  </div>
                   
                   {/* Overlay on hover */}
-                  <div className="absolute inset-0 bg-primary/70 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="text-center p-4">
-                      <h3 className="text-lg font-medium text-offwhite mb-1">{project.title}</h3>
-                      <p className="text-sm text-offwhite/80">{language === 'en' ? "View Project" : "Voir le projet"}</p>
-                    </div>
+                  <div className="portfolio-overlay absolute inset-0 bg-primary/80 flex flex-col items-center justify-center opacity-0 transition-opacity duration-300 p-4">
+                    <h3 className="text-xl font-medium text-white mb-2 text-center">{project.title}</h3>
+                    <p className="text-white/80 text-sm text-center mb-4 line-clamp-2">{project.description}</p>
+                    <Button variant="outline" size="sm" className="text-white border-white hover:bg-white/20 hover:text-white mt-auto">
+                      {language === 'en' ? "View Project" : "Voir le projet"} 
+                      <ArrowRight className="ml-1 w-4 h-4" />
+                    </Button>
                   </div>
                   
                   {/* Video indicator */}
                   {project.type === 'video' && (
                     <div className="absolute bottom-3 right-3 bg-black/70 rounded-full p-2">
-                      <Video className="w-4 h-4 text-offwhite" />
+                      <Video className="w-4 h-4 text-white" />
                     </div>
                   )}
                 </div>
-              </div>
+              </Card>
             ))
           ) : (
             <div className="col-span-full text-center py-10">
@@ -290,10 +304,10 @@ const PortfolioSection = () => {
         </div>
       </div>
 
-      {/* Project detail dialog */}
+      {/* Project detail dialog - enhanced with better layout */}
       <Dialog open={!!selectedProject} onOpenChange={(open) => !open && setSelectedProject(null)}>
-        <DialogContent className="sm:max-w-3xl">
-          <DialogClose className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground">
+        <DialogContent className="sm:max-w-4xl p-0 overflow-hidden bg-white rounded-lg">
+          <DialogClose className="absolute right-4 top-4 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none data-[state=open]:bg-accent data-[state=open]:text-muted-foreground z-20">
             <svg 
               xmlns="http://www.w3.org/2000/svg" 
               width="24" 
@@ -313,28 +327,33 @@ const PortfolioSection = () => {
           </DialogClose>
           
           {selectedProject && (
-            <div className="grid md:grid-cols-5 gap-6">
-              <div className="md:col-span-3">
+            <div className="grid md:grid-cols-2">
+              <div className="relative h-full min-h-[300px]">
                 {selectedProject.type === 'image' ? (
                   <img
                     src={selectedProject.image}
                     alt={selectedProject.title}
-                    className="w-full h-auto rounded-md"
+                    className="w-full h-full object-cover"
+                    style={{ maxHeight: '80vh' }}
                   />
                 ) : (
-                  <div className="aspect-video bg-black rounded-md flex items-center justify-center">
+                  <div className="w-full h-full bg-black flex items-center justify-center">
                     <p className="text-white">{language === 'en' ? "Video preview placeholder" : "Aperçu vidéo"}</p>
                   </div>
                 )}
               </div>
-              <div className="md:col-span-2">
-                <h3 className="text-xl font-medium font-playfair mb-2">{selectedProject.title}</h3>
-                <p className="text-muted-foreground mb-4">{selectedProject.description}</p>
-                <div className="flex items-center gap-2 text-sm">
+              <div className="p-6 flex flex-col">
+                <h3 className="text-2xl font-medium font-playfair mb-4">{selectedProject.title}</h3>
+                <p className="text-muted-foreground mb-6">{selectedProject.description}</p>
+                <div className="flex items-center gap-2 text-sm mt-auto">
                   <span className="bg-pink-light px-3 py-1 rounded-full">
                     {categories.find(cat => cat.id === selectedProject.category)?.name || selectedProject.category}
                   </span>
                 </div>
+                <Button className="mt-6 btn-hover self-start">
+                  {language === 'en' ? "View Full Project" : "Voir le projet complet"}
+                  <ArrowRight className="ml-1" />
+                </Button>
               </div>
             </div>
           )}

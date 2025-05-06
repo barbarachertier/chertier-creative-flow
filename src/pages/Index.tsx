@@ -18,7 +18,7 @@ const Index = () => {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry, index) => {
+        entries.forEach((entry) => {
           if (entry.isIntersecting) {
             // Add staggered delay based on the element's index within its parent
             const delay = 100; // Base delay in ms
@@ -47,12 +47,21 @@ const Index = () => {
     const scrollElements = document.querySelectorAll('.reveal-on-scroll');
     scrollElements.forEach((el) => observer.observe(el));
 
+    // Add parallax effect
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      document.documentElement.style.setProperty('--scroll-y', String(scrollY));
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
     // Add smooth scrolling behavior to the document
     document.documentElement.style.scrollBehavior = 'smooth';
 
     return () => {
       scrollElements.forEach((el) => observer.unobserve(el));
       document.documentElement.style.scrollBehavior = '';
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
@@ -65,17 +74,20 @@ const Index = () => {
 
   return (
     <div className="min-h-screen relative">
-      {/* Add mouse light effect */}
+      {/* Mouse light effect stays below all other elements */}
       <MouseLightEffect />
       
-      <Navbar />
-      <HeroSection />
-      <AboutSection />
-      <ExperienceSection />
-      <SkillsSection />
-      <PortfolioSection />
-      <ContactSection />
-      <Footer />
+      {/* Content with higher z-index to ensure text readability */}
+      <div className="relative z-10">
+        <Navbar />
+        <HeroSection />
+        <AboutSection />
+        <ExperienceSection />
+        <SkillsSection />
+        <PortfolioSection />
+        <ContactSection />
+        <Footer />
+      </div>
     </div>
   );
 };

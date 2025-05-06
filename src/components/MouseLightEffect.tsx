@@ -26,23 +26,41 @@ const MouseLightEffect = () => {
   return (
     <div 
       className={`fixed inset-0 pointer-events-none z-0 transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
+      aria-hidden="true"
     >
+      {/* Main pink glow - positioned behind content */}
       <div 
-        className="absolute w-[500px] h-[500px] rounded-full bg-radial-gradient opacity-50 mix-blend-overlay"
+        className="absolute w-[600px] h-[600px] rounded-full opacity-60 mix-blend-soft-light"
         style={{
-          background: 'radial-gradient(circle, rgba(248, 187, 208, 0.9) 0%, rgba(248, 187, 208, 0) 70%)',
-          transform: `translate(${position.x - 250}px, ${position.y - 250}px)`,
+          background: 'radial-gradient(circle, rgba(248, 187, 208, 1) 0%, rgba(248, 187, 208, 0) 70%)',
+          transform: `translate(${position.x - 300}px, ${position.y - 300}px)`,
           transition: 'transform 0.15s ease-out',
-          filter: 'blur(15px)',
+          filter: 'blur(25px)',
+          willChange: 'transform',
         }}
       />
+      
+      {/* Secondary white glow for highlight effect */}
       <div 
-        className="absolute w-[300px] h-[300px] rounded-full"
+        className="absolute w-[350px] h-[350px] rounded-full"
         style={{
-          background: 'radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 70%)',
-          transform: `translate(${position.x - 150}px, ${position.y - 150}px)`,
+          background: 'radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 70%)',
+          transform: `translate(${position.x - 175}px, ${position.y - 175}px)`,
           transition: 'transform 0.1s linear',
           mixBlendMode: 'screen',
+          willChange: 'transform',
+        }}
+      />
+      
+      {/* Small focused highlight */}
+      <div 
+        className="absolute w-[120px] h-[120px] rounded-full"
+        style={{
+          background: 'radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 80%)',
+          transform: `translate(${position.x - 60}px, ${position.y - 60}px)`,
+          transition: 'transform 0.05s linear',
+          mixBlendMode: 'overlay',
+          willChange: 'transform',
         }}
       />
     </div>
