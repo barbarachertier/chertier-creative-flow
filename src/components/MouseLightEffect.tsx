@@ -28,37 +28,38 @@ const MouseLightEffect = () => {
       className={`fixed inset-0 pointer-events-none z-0 transition-opacity duration-300 ${isVisible ? 'opacity-100' : 'opacity-0'}`}
       aria-hidden="true"
     >
-      {/* Main pink glow - positioned behind content */}
+      {/* Large pink glow - positioned behind content */}
       <div 
-        className="absolute w-[600px] h-[600px] rounded-full opacity-60 mix-blend-soft-light"
+        className="absolute w-[800px] h-[800px] rounded-full opacity-70 mix-blend-soft-light"
         style={{
           background: 'radial-gradient(circle, rgba(248, 187, 208, 1) 0%, rgba(248, 187, 208, 0) 70%)',
-          transform: `translate(${position.x - 300}px, ${position.y - 300}px)`,
+          transform: `translate(${position.x - 400}px, ${position.y - 400}px)`,
           transition: 'transform 0.15s ease-out',
-          filter: 'blur(25px)',
+          filter: 'blur(35px)',
           willChange: 'transform',
         }}
       />
       
-      {/* Secondary white glow for highlight effect */}
+      {/* Medium white glow for highlight effect */}
       <div 
-        className="absolute w-[350px] h-[350px] rounded-full"
+        className="absolute w-[450px] h-[450px] rounded-full"
         style={{
-          background: 'radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 70%)',
-          transform: `translate(${position.x - 175}px, ${position.y - 175}px)`,
-          transition: 'transform 0.1s linear',
+          background: 'radial-gradient(circle, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0) 75%)',
+          transform: `translate(${position.x - 225}px, ${position.y - 225}px)`,
+          transition: 'transform 0.12s linear',
           mixBlendMode: 'screen',
+          filter: 'blur(15px)',
           willChange: 'transform',
         }}
       />
       
       {/* Small focused highlight */}
       <div 
-        className="absolute w-[120px] h-[120px] rounded-full"
+        className="absolute w-[150px] h-[150px] rounded-full"
         style={{
-          background: 'radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 80%)',
-          transform: `translate(${position.x - 60}px, ${position.y - 60}px)`,
-          transition: 'transform 0.05s linear',
+          background: 'radial-gradient(circle, rgba(255, 255, 255, 0.95) 0%, rgba(255, 255, 255, 0) 80%)',
+          transform: `translate(${position.x - 75}px, ${position.y - 75}px)`,
+          transition: 'transform 0.08s linear',
           mixBlendMode: 'overlay',
           willChange: 'transform',
         }}
