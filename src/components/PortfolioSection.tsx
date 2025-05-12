@@ -1,11 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
-import { Dialog, DialogContent, DialogClose } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { cn } from '@/lib/utils';
-import { ArrowRight, ArrowLeft, Image, Video, Layout, FileText, Folder, Smartphone, Pen, X } from 'lucide-react';
+import { Card } from "@/components/ui/card";
+import { ArrowRight, ArrowLeft, Image, Video, FileText, Folder, Smartphone, Pen, X } from 'lucide-react';
 import { useLanguage } from "@/contexts/LanguageContext";
-import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/hover-card";
+import { HoverCardTrigger, HoverCardContent } from "@/components/ui/hover-card";
 
 interface Category {
   id: string;
@@ -254,18 +252,18 @@ const PortfolioSection = () => {
     return categories.find(category => category.id === selectedCategory);
   };
 
-  // Animated transition classes
+  // Animated transition classes - FIX THE TYPE COMPARISON ERROR HERE
   const getAnimationClasses = (level: NavigationLevel) => {
     if (level === navigationLevel) {
       return 'opacity-100 translate-y-0 scale-100';
     }
     
-    // Fix the TypeScript error by properly comparing the navigation levels
+    // Fixed TypeScript error by properly comparing the navigation levels
     return 'opacity-0 translate-y-8 scale-95 absolute inset-0 pointer-events-none';
   };
 
   return (
-    <section id="portfolio" className="py-12 bg-offwhite relative z-10">
+    <section id="portfolio" className="py-8 bg-offwhite relative z-10">
       <div 
         ref={sectionRef}
         className="section-container"
@@ -273,12 +271,12 @@ const PortfolioSection = () => {
         <span className={`text-pink-dark font-medium block transition-all duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
           {t('portfolio.subtitle')}
         </span>
-        <h2 className={`section-title mt-2 mb-6 transition-all duration-700 delay-100 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+        <h2 className={`section-title mt-2 mb-5 transition-all duration-700 delay-100 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
           {t('portfolio.title')}
         </h2>
         
         {/* Navigation controls */}
-        <div className={`flex items-center gap-4 mb-6 transition-all duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
+        <div className={`flex items-center gap-4 mb-5 transition-all duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
           {navigationLevel !== 'categories' && (
             <Button 
               variant="ghost" 
@@ -378,7 +376,7 @@ const PortfolioSection = () => {
           {selectedCategory && (
             <>
               {/* Category header with description */}
-              <div className="mb-5 bg-white rounded-lg overflow-hidden shadow-md hover-glow transition-all duration-300">
+              <div className="mb-4 bg-white rounded-lg overflow-hidden shadow-md hover-glow transition-all duration-300">
                 <div className="grid md:grid-cols-2 items-center">
                   <div className="p-6">
                     <h3 className="text-2xl font-playfair mb-3">
@@ -405,7 +403,7 @@ const PortfolioSection = () => {
               </div>
               
               {/* Projects grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
                 {visibleProjects.length > 0 ? (
                   visibleProjects.map((project, index) => (
                     <Card 
@@ -519,7 +517,6 @@ const PortfolioSection = () => {
             </div>
           )}
         </div>
-
       </div>
     </section>
   );
