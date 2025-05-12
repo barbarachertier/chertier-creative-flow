@@ -5,7 +5,8 @@ import { componentTagger } from "lovable-tagger";
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => ({
-  base: "/chertier-creative-flow/", // 👈 REQUIRED for GitHub Pages
+base: "/chertier-creative-flow/",
+ // 👈 REQUIRED for GitHub Pages
 
   server: {
     host: "::",
