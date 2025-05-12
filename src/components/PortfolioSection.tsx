@@ -252,7 +252,7 @@ const PortfolioSection = () => {
     return categories.find(category => category.id === selectedCategory);
   };
 
-  // Animated transition classes - FIX THE TYPE COMPARISON ERROR HERE
+  // Fixed TypeScript error in getAnimationClasses function
   const getAnimationClasses = (level: NavigationLevel) => {
     if (level === navigationLevel) {
       return 'opacity-100 translate-y-0 scale-100';
