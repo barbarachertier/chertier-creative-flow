@@ -298,11 +298,11 @@ const PortfolioSection = () => {
               <span className="cursor-pointer hover:text-primary" onClick={handleBackToCategories}>
                 {language === 'en' ? 'Portfolio' : 'Portfolio'}
               </span>
-              {navigationLevel !== 'categories' && (
+                {getCurrentCategory() && (
                 <>
                   <span>/</span>
                   <span 
-                    className={`${navigationLevel === 'detail' ? 'cursor-pointer hover:text-primary' : 'font-medium text-primary'}`}
+                    className={`${navigationLevel === 'detail' ? 'cursor-pointer hover:text-primary' : 'font-medium text-primary'}`} 
                     onClick={navigationLevel === 'detail' ? handleBackToProjects : undefined}
                   >
                     {getCurrentCategory()?.name}
