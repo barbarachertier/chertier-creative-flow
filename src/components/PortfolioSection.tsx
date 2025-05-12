@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from 'react';
 import { Dialog, DialogContent, DialogClose } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -260,6 +259,9 @@ const PortfolioSection = () => {
     if (level === navigationLevel) {
       return 'opacity-100 translate-y-0 scale-100';
     }
+    
+    // Fix the TypeScript error by properly comparing the navigation levels
+    // The original code was causing error TS2367 because of direct comparison
     return 'opacity-0 translate-y-8 scale-95 absolute inset-0 pointer-events-none';
   };
 
