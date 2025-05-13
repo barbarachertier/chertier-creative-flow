@@ -91,7 +91,7 @@ const PortfolioSection = () => {
   };
 
   const getCurrentCategory = () => {
-    return categories.find(category => category.id === selectedCategory);
+    return categories.find(category => category.id === selectedCategory) || null;
   };
 
   // Get animation classes for view transitions
@@ -142,7 +142,7 @@ const PortfolioSection = () => {
           ref={projectsContainerRef}
           className={`relative transition-all duration-500 transform ${getAnimationClasses('projects')}`}
         >
-          {selectedCategory && (
+          {selectedCategory && getCurrentCategory() && (
             <>
               {/* Category header with description */}
               <CategoryHeader 
