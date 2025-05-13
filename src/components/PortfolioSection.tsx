@@ -15,7 +15,7 @@ const PortfolioSection = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [navigationLevel, setNavigationLevel] = useState<NavigationLevel>('categories');
   const [isVisible, setIsVisible] = useState(true);
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
 
   // Handlers
   const handleCategoryClick = (categoryId: string) => {
@@ -43,12 +43,12 @@ const PortfolioSection = () => {
   // Data retrieval functions
   const getProjectsByCategory = (categoryId: string | null) => {
     if (!categoryId) return [];
-    return projectsData.filter(project => project.category === categoryId);
+    return projectsData(language).filter(project => project.category === categoryId);
   };
 
   const getCurrentCategory = () => {
     if (!selectedCategory) return null;
-    return categoriesData.find(category => category.id === selectedCategory) || null;
+    return categoriesData(t, language).find(category => category.id === selectedCategory) || null;
   };
 
   // Log state changes for debugging
@@ -56,8 +56,6 @@ const PortfolioSection = () => {
     console.log("Selected Category:", selectedCategory);
     console.log("Selected Project:", selectedProject);
   }, [selectedCategory, selectedProject]);
-
-  const { t } = useLanguage();
 
   return (
     <section id="portfolio" className="py-20 bg-pink-light/10">
@@ -80,7 +78,7 @@ const PortfolioSection = () => {
         {/* Main content based on navigation level */}
         {navigationLevel === 'categories' && (
           <CategoriesView 
-            categories={categoriesData}
+            categories={categoriesData(t, language)}
             isVisible={true}
             handleCategoryClick={handleCategoryClick}
             language={language}
@@ -100,7 +98,7 @@ const PortfolioSection = () => {
             project={selectedProject}
             handleBackToProjects={handleBackToProjects}
             language={language}
-            categories={categoriesData}
+            categories={categoriesData(t, language)}
           />
         )}
       </div>
