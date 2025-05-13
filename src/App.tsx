@@ -11,6 +11,9 @@ import { LanguageProvider } from "./contexts/LanguageContext";
 // Create a new QueryClient instance
 const queryClient = new QueryClient();
 
+// Define base path from Vite config
+const basePath = import.meta.env.BASE_URL || "/";
+
 // Define the App component
 const App = () => {
   return (
@@ -19,7 +22,7 @@ const App = () => {
         <TooltipProvider>
           <Toaster />
           <Sonner />
-          <BrowserRouter>
+          <BrowserRouter basename={basePath}>
             <Routes>
               <Route path="/" element={<Index />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
