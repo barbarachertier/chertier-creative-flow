@@ -21,4 +21,4 @@ export interface Project {
   tools?: string[];
 }
 
-export type NavigationLevel = 'categories' | 'projects' | 'detail';
+export type NavigationLevel = 'categories' | 'projects' | 'projectDetail';
