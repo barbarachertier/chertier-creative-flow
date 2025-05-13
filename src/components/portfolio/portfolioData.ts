@@ -1,12 +1,12 @@
 
 import { Category, Project } from './types';
-import { Image, Video, FileText, Folder, Smartphone, Pen } from 'lucide-react';
+import { Image, Video, FileText, Folder, Smartphone, Pen, TrendingUp, Users, Newspaper, MessageSquare } from 'lucide-react';
 import React from 'react';
 
 export const getCategories = (t: (key: string) => string, language: string): Category[] => [
   { 
     id: "video", 
-    name: t('portfolio.category.video'),
+    name: language === 'en' ? "Videos" : "Vidéos",
     icon: React.createElement(Video, { className: "w-6 h-6" }),
     description: language === 'en' ? "Motion graphics and video editing projects showcasing dynamic visual storytelling." : "Projets de motion design et montage vidéo mettant en valeur une narration visuelle dynamique.",
     coverImage: "/lovable-uploads/ed311d7e-00fe-4aca-b901-4b84d532eed8.png",
@@ -14,7 +14,7 @@ export const getCategories = (t: (key: string) => string, language: string): Cat
   },
   { 
     id: "logo", 
-    name: t('portfolio.category.logo'),
+    name: language === 'en' ? "Logos" : "Logos",
     icon: React.createElement(Image, { className: "w-6 h-6" }),
     description: language === 'en' ? "Brand identity projects featuring distinctive and memorable logo designs." : "Projets d'identité de marque présentant des designs de logo distinctifs et mémorables.",
     coverImage: "/lovable-uploads/4cfad69e-a457-46a8-948d-b9230a870d8f.png",
@@ -22,7 +22,7 @@ export const getCategories = (t: (key: string) => string, language: string): Cat
   },
   { 
     id: "print", 
-    name: t('portfolio.category.print'),
+    name: language === 'en' ? "Print" : "Print",
     icon: React.createElement(FileText, { className: "w-6 h-6" }),
     description: language === 'en' ? "Print design work from editorial layouts to promotional materials." : "Travaux de design d'impression, des mises en page éditoriales aux supports promotionnels.",
     coverImage: "/lovable-uploads/c3702d18-39df-4c7d-a3ad-8643598ea5fb.png",
@@ -30,7 +30,7 @@ export const getCategories = (t: (key: string) => string, language: string): Cat
   },
   { 
     id: "bigprojects", 
-    name: t('portfolio.category.bigprojects'),
+    name: language === 'en' ? "Big Projects" : "Gros Projets",
     icon: React.createElement(Folder, { className: "w-6 h-6" }),
     description: language === 'en' ? "Comprehensive design solutions for large-scale projects and campaigns." : "Solutions de design complètes pour des projets et campagnes à grande échelle.",
     coverImage: "/lovable-uploads/3faf1bca-41d0-4c70-acad-49caa5c1ec97.png",
@@ -38,7 +38,7 @@ export const getCategories = (t: (key: string) => string, language: string): Cat
   },
   { 
     id: "motion", 
-    name: t('portfolio.category.motion'),
+    name: language === 'en' ? "Motion Design" : "Motion Design",
     icon: React.createElement(Video, { className: "w-6 h-6" }),
     description: language === 'en' ? "Animation and motion design projects creating dynamic visual experiences." : "Projets d'animation et de motion design créant des expériences visuelles dynamiques.",
     coverImage: "/lovable-uploads/ed311d7e-00fe-4aca-b901-4b84d532eed8.png",
@@ -46,7 +46,7 @@ export const getCategories = (t: (key: string) => string, language: string): Cat
   },
   { 
     id: "ux", 
-    name: t('portfolio.category.ux'),
+    name: language === 'en' ? "UX Design" : "UX Design",
     icon: React.createElement(Smartphone, { className: "w-6 h-6" }),
     description: language === 'en' ? "User experience design focusing on intuitive and engaging interfaces." : "Design d'expérience utilisateur axé sur des interfaces intuitives et engageantes.",
     coverImage: "/lovable-uploads/2824f814-bcd0-43e2-8037-8081d710ad0a.png",
@@ -54,12 +54,36 @@ export const getCategories = (t: (key: string) => string, language: string): Cat
   },
   { 
     id: "social", 
-    name: t('portfolio.category.social'),
+    name: language === 'en' ? "Social Media" : "Réseaux Sociaux",
     icon: React.createElement(Pen, { className: "w-6 h-6" }),
     description: language === 'en' ? "Social media content creation and campaign designs." : "Création de contenu pour les réseaux sociaux et conceptions de campagnes.",
     coverImage: "/lovable-uploads/09297029-307e-48b4-8690-e7f78fc6316a.png",
     bgColor: "bg-beige-light"
   },
+  { 
+    id: "magazine", 
+    name: language === 'en' ? "Magazine" : "Magazine",
+    icon: React.createElement(Newspaper, { className: "w-6 h-6" }),
+    description: language === 'en' ? "Magazine layouts and editorial design for print and digital." : "Mises en page de magazines et conception éditoriale pour l'impression et le numérique.",
+    coverImage: "/lovable-uploads/c3702d18-39df-4c7d-a3ad-8643598ea5fb.png",
+    bgColor: "bg-green-light"
+  },
+  { 
+    id: "strategy", 
+    name: language === 'en' ? "Strategy" : "Stratégie",
+    icon: React.createElement(TrendingUp, { className: "w-6 h-6" }),
+    description: language === 'en' ? "Brand strategy and marketing planning for effective communication." : "Stratégie de marque et planification marketing pour une communication efficace.",
+    coverImage: "/lovable-uploads/3faf1bca-41d0-4c70-acad-49caa5c1ec97.png",
+    bgColor: "bg-gold-light"
+  },
+  { 
+    id: "press", 
+    name: language === 'en' ? "Press" : "Presse",
+    icon: React.createElement(MessageSquare, { className: "w-6 h-6" }),
+    description: language === 'en' ? "Press kits, media relations and press release design." : "Dossiers de presse, relations médias et conception de communiqués de presse.",
+    coverImage: "/lovable-uploads/c3702d18-39df-4c7d-a3ad-8643598ea5fb.png",
+    bgColor: "bg-pink-light"
+  }
 ];
 
 export const getProjects = (language: string): Project[] => [
@@ -121,7 +145,7 @@ export const getProjects = (language: string): Project[] => [
     id: 7,
     title: language === 'en' ? "Echo 2 Pros Magazine" : "Magazine Echo 2 Pros",
     description: language === 'en' ? "Editorial design for a professional business magazine featuring dynamic layouts, carefully selected typography, and visual hierarchy that ensures readability while maintaining a sophisticated aesthetic across feature articles and regular columns." : "Conception éditoriale pour un magazine d'affaires professionnel présentant des mises en page dynamiques, une typographie soigneusement sélectionnée et une hiérarchie visuelle qui assure la lisibilité tout en maintenant une esthétique sophistiquée dans les articles de fond et les chroniques régulières.",
-    category: "print",
+    category: "magazine",
     image: "/lovable-uploads/c3702d18-39df-4c7d-a3ad-8643598ea5fb.png",
     type: "image",
     tools: ["Adobe InDesign", "Adobe Photoshop", "Adobe Illustrator"]
@@ -143,5 +167,27 @@ export const getProjects = (language: string): Project[] => [
     image: "/lovable-uploads/4cfad69e-a457-46a8-948d-b9230a870d8f.png",
     type: "image",
     tools: ["Adobe Illustrator", "Adobe Photoshop", "Procreate"]
+  },
+  {
+    id: 10,
+    title: language === 'en' ? "Media Relations Strategy" : "Stratégie de relations médias",
+    description: language === 'en' ? "Comprehensive media relations strategy for a tech startup launch, including press kit design, media outreach planning and PR messaging framework." : "Stratégie complète de relations médias pour le lancement d'une startup technologique, comprenant la conception d'un dossier de presse, la planification des relations avec les médias et un cadre de messagerie RP.",
+    category: "strategy",
+    image: "/lovable-uploads/3faf1bca-41d0-4c70-acad-49caa5c1ec97.png",
+    type: "image",
+    tools: ["Adobe InDesign", "Microsoft Excel", "Asana"]
+  },
+  {
+    id: 11,
+    title: language === 'en' ? "Press Release Design" : "Conception de communiqué de presse",
+    description: language === 'en' ? "Modern press release design for a product launch event, featuring engaging visuals and clear information hierarchy to capture media attention." : "Conception moderne de communiqué de presse pour un événement de lancement de produit, avec des visuels attrayants et une hiérarchie d'information claire pour capter l'attention des médias.",
+    category: "press",
+    image: "/lovable-uploads/c3702d18-39df-4c7d-a3ad-8643598ea5fb.png",
+    type: "image",
+    tools: ["Adobe InDesign", "Adobe Illustrator", "Microsoft Word"]
   }
 ];
+
+// Export the actual data so they can be directly imported
+export const categoriesData = (t: (key: string) => string, language: string) => getCategories(t, language);
+export const projectsData = (language: string) => getProjects(language);
