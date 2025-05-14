@@ -65,7 +65,7 @@ const AboutSection = () => {
           <div className="relative">
             <div className="absolute -top-4 -left-4 w-full h-full border-2 border-pink-light"></div>
             <img 
-              src="/lovable-uploads/a8908e05-2f4f-45dd-bd89-a9afb4d9ec36.png" 
+              src="public\lovable-uploads\photo-barbarachertier.png" 
               alt="Barbara Chertier" 
               className="w-full h-auto object-cover"
             />
