@@ -1,7 +1,6 @@
-
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Video } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Project } from './types';
 
 interface ProjectsGridProps {
@@ -11,6 +10,11 @@ interface ProjectsGridProps {
 }
 
 const ProjectsGrid = ({ projects, handleProjectClick, language }: ProjectsGridProps) => {
+  const getImagePath = (imageName: string) => {
+    const cleanName = imageName.replace(/^\/projects\//, '');
+    return `${import.meta.env.BASE_URL}projects/${encodeURIComponent(cleanName)}`;
+  };
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
       {projects.length > 0 ? (
@@ -27,11 +31,17 @@ const ProjectsGrid = ({ projects, handleProjectClick, language }: ProjectsGridPr
             <div className="relative w-full h-full cursor-pointer">
               {/* Project image with hover effect */}
               <div className="thumbnail-container w-full h-full">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="thumbnail w-full h-full object-cover"
-                />
+                {project.images && project.images.length > 0 ? (
+                  <img
+                    src={getImagePath(project.images[0])}
+                    alt={project.title}
+                    className="thumbnail w-full h-full object-cover"
+                  />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center bg-gray-100 text-gray-400">
+                    No image
+                  </div>
+                )}
               </div>
               
               {/* Overlay on hover */}
@@ -43,13 +53,6 @@ const ProjectsGrid = ({ projects, handleProjectClick, language }: ProjectsGridPr
                   <ArrowRight className="ml-1 w-4 h-4" />
                 </Button>
               </div>
-              
-              {/* Video indicator */}
-              {project.type === 'video' && (
-                <div className="absolute bottom-3 right-3 bg-black/70 rounded-full p-2">
-                  <Video className="w-4 h-4 text-white" />
-                </div>
-              )}
             </div>
           </Card>
         ))
