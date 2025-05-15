@@ -11,7 +11,7 @@ export const getCategories = (t: (key: string) => string, language: string): Cat
     description: language === "en"
       ? "Motion design, video editing, and interactive storytelling."
       : "Montage vidéo, motion design et narration interactive.",
-    coverImage: "/projects/video.jpg",
+    coverImage:`${import.meta.env.BASE_URL}video.jpg`,
     bgColor: "bg-pink-light"
   },
   {
@@ -21,7 +21,7 @@ export const getCategories = (t: (key: string) => string, language: string): Cat
     description: language === "en"
       ? "Logo and brand identity designs for diverse projects."
       : "Logos et identités visuelles conçus pour divers projets.",
-    coverImage: "/projects/logo.jpg",
+    coverImage: "/logo.jpg",
     bgColor: "bg-beige-light"
   },
   {

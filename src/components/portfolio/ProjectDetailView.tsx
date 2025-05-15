@@ -2,11 +2,15 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight, X } from 'lucide-react';
 import { Project, Category } from './types';
 
-const getImagePath = (imageName: string) =>
-  `${import.meta.env.BASE_URL}projects/${encodeURIComponent(imageName)}`;
+const getImagePath = (imageName: string) => {
+  const cleanName = imageName.replace(/^\/projects\//, '');
+  return `${import.meta.env.BASE_URL}projects/${encodeURIComponent(cleanName)}`;
+};
 
-const getVideoPath = (videoName: string) =>
-  `${import.meta.env.BASE_URL}projects/${encodeURIComponent(videoName)}`;
+const getVideoPath = (videoName: string) => {
+  const cleanName = videoName.replace(/^\/projects\//, '');
+  return `${import.meta.env.BASE_URL}projects/${encodeURIComponent(cleanName)}`;
+};
 
 
 
@@ -31,14 +35,22 @@ const ProjectDetailView = ({ project, handleBackToProjects, language, categories
                 : "Votre navigateur ne prend pas en charge la lecture vidéo."}
             </video>
           ) : (
-            project.images?.map((img, index) => (
+            project.images && project.images.length > 0 ? (
+              project.images.map((img, index) => (
+                <img
+                  key={index}
+                  src={getImagePath(img)}
+                  alt={`${project.title} - ${index + 1}`}
+                  className="w-full rounded-lg object-contain"
+                />
+              ))
+            ) : (
               <img
-                key={index}
-                src={getImagePath(img)}
-                alt={`${project.title} - ${index + 1}`}
+                src="/placeholder.svg"
+                alt="No image available"
                 className="w-full rounded-lg object-contain"
               />
-            ))
+            )
           )}
         </div>
 

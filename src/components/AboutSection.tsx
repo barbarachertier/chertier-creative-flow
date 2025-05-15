@@ -1,4 +1,3 @@
-
 import { useEffect, useRef, useState } from 'react';
 import { useLanguage } from "@/contexts/LanguageContext";
 
@@ -65,7 +64,7 @@ const AboutSection = () => {
           <div className="relative">
             <div className="absolute -top-4 -left-4 w-full h-full border-2 border-pink-light"></div>
             <img 
-              src="public\lovable-uploads\photo-barbarachertier.png" 
+              src="/lovable-uploads/photo-barbarachertier.png" 
               alt="Barbara Chertier" 
               className="w-full h-auto object-cover"
             />
