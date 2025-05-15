@@ -1,7 +1,11 @@
+
+import CategoryIntro from './CategoryIntro';
+import ProjectGallery from './ProjectGallery';
 import { useState, useEffect, useRef } from 'react';
 import { useLanguage } from "../contexts/LanguageContext";
 import { NavigationLevel, Project } from './portfolio/types';
-import { categoriesData, projectsData } from './portfolio/portfolioData';
+import { projectsData } from './portfolio/projectsData';
+import { categoriesData } from './portfolio/categoriesData'; // si tu as mis les catégories dans un autre fichier
 import CategoriesView from './portfolio/CategoriesView';
 import CategoryHeader from './portfolio/CategoryHeader';
 import ProjectsGrid from './portfolio/ProjectsGrid';
@@ -98,13 +102,21 @@ const PortfolioSection = () => {
           />
         </div>
 
-        {navigationLevel === 'projects' && selectedCategory && (
-          <ProjectsGrid 
-            projects={getProjectsByCategory(selectedCategory)}
-            handleProjectClick={handleProjectClick}
-            language={language}
-          />
-        )}
+{navigationLevel === 'projects' && selectedCategory && (
+  <>
+    <CategoryIntro
+      category={getCurrentCategory()}
+      language={language}
+    />
+    <ProjectGallery
+      projects={getProjectsByCategory(selectedCategory)}
+      onSelectProject={handleProjectClick}
+      language={language}
+    />
+  </>
+)}
+
+
 
         {navigationLevel === 'projectDetail' && selectedProject && (
           <ProjectDetailView 

@@ -71,7 +71,7 @@ const HeroSection = () => {
           <div className="relative rounded-full overflow-hidden shadow-xl w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 hover:scale-[1.02] transition-all duration-500 ease-in-out">
             <div className="absolute inset-0 bg-gradient-to-t from-pink-300/50 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
             <img 
-              src="/lovable-uploads/f105f36c-6519-44b3-8d47-6381c3642ac7.png" 
+              src="dist\lovable-uploads\photo-barbarachertier.png" 
               alt="Barbara Chertier" 
               className="w-full h-full object-cover"
             />
