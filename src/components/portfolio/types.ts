@@ -11,14 +11,16 @@ export interface Category {
 }
 
 export interface Project {
-  id: number;
+  id: string;
+  category: string;
   title: string;
   description: string;
-  category: string;
-  image: string;
-  type: 'image' | 'video';
-  videoUrl?: string;
+  images?: string[];
+  video?: boolean;
+  videoSrc?: string; // <- nouveau si tu veux inclure la vidéo locale
   tools?: string[];
+  link?: string;
 }
+
 
 export type NavigationLevel = 'categories' | 'projects' | 'projectDetail';
