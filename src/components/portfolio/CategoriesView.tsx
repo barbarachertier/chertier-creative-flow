@@ -45,16 +45,17 @@ const CategoriesView = ({ categories, isVisible, handleCategoryClick, language }
             </div>
             
             {/* Background decoration */}
-            {category.coverImage && (
-              <div className="absolute top-0 right-0 w-24 h-24 opacity-10">
-                <img 
-                  src={category.coverImage} 
-                  alt="" 
-                  className="w-full h-full object-cover"
-                  aria-hidden="true" 
-                />
-              </div>
-            )}
+            {category.coverImage?.[0] && (
+  <div className="absolute top-0 right-0 w-24 h-24 opacity-150">
+    <img 
+      src={`${import.meta.env.BASE_URL}projects/${encodeURIComponent(category.coverImage[0])}`} 
+      alt={`${category.name} cover`} 
+      className="w-full h-full object-cover"
+      aria-hidden="true" 
+    />
+  </div>
+)}
+
           </div>
         </Card>
       ))}
