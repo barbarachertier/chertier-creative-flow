@@ -21,7 +21,7 @@ export const getCategories = (t: (key: string) => string, language: string): Cat
     description: language === "en"
       ? "Logo and brand identity designs for diverse projects."
       : "Logos et identités visuelles conçus pour divers projets.",
-    coverImage: ["logo.jpg"],
+    coverImage:["logo.jpg"],
     bgColor: "bg-beige-light"
   },
   {
@@ -31,7 +31,7 @@ export const getCategories = (t: (key: string) => string, language: string): Cat
     description: language === "en"
       ? "Editorial design and layout for student publications."
       : "Mise en page et design éditorial pour des publications étudiantes.",
-    coverImage: ["magazine.jpg"],
+    coverImage:["magazine.jpg"],
     bgColor: "bg-green-light"
   },
   {
@@ -41,7 +41,7 @@ export const getCategories = (t: (key: string) => string, language: string): Cat
     description: language === "en"
       ? "Large-scale creative projects from idea to execution."
       : "Projets créatifs d'envergure, de l’idée à la réalisation.",
-    coverImage: ["gros projet.jpg"],
+    coverImage:["gros projet.jpg"],
     bgColor: "bg-gold-light"
   },
   {
@@ -51,7 +51,7 @@ export const getCategories = (t: (key: string) => string, language: string): Cat
     description: language === "en"
       ? "Business cards, posters and communication material."
       : "Cartes de visite, affiches et supports de communication.",
-    coverImage: ["print (1).jpg"],
+    coverImage:["print (1).jpg"],
     bgColor: "bg-green-light"
   },
   {
@@ -61,7 +61,7 @@ export const getCategories = (t: (key: string) => string, language: string): Cat
     description: language === "en"
       ? "App concepts and user flows focused on user experience."
       : "Concepts d’application et parcours utilisateur centrés UX.",
-    coverImage: ["ux.jpg"],
+    coverImage:["ux.jpg"],
     bgColor: "bg-pink-light"
   },
   {
@@ -71,7 +71,7 @@ export const getCategories = (t: (key: string) => string, language: string): Cat
     description: language === "en"
       ? "Creative content for Instagram, LinkedIn and Facebook."
       : "Contenus créatifs pour Instagram, LinkedIn et Facebook.",
-    coverImage: ["rs.jpg"],
+    coverImage:["rs.jpg"],
     bgColor: "bg-beige-light"
   },
   {
@@ -81,7 +81,7 @@ export const getCategories = (t: (key: string) => string, language: string): Cat
     description: language === "en"
       ? "Communication and marketing strategies developed in real-life case studies."
       : "Stratégies de communication et marketing développées sur des cas réels.",
-    coverImage: ["strat.jpg"],
+    coverImage:["strat.jpg"],
     bgColor: "bg-gold-light"
   }
 ];
