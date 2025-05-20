@@ -1,5 +1,5 @@
 
-import { Category } from './types';
+import { Category } from './portfolio/types';
 
 interface CategoryIntroProps {
   category: Category | null;

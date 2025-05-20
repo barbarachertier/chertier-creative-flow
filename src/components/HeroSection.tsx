@@ -24,6 +24,9 @@ const HeroSection = () => {
 
     window.addEventListener('scroll', handleScroll);
 
+    {false && <img src="/projects/me.png" alt="force include" />}
+
+
     return () => {
       clearTimeout(timer);
       window.removeEventListener('scroll', handleScroll);
@@ -44,7 +47,7 @@ const HeroSection = () => {
             className={`text-4xl md:text-5xl font-playfair font-medium text-[#4A4A4A] mb-6 
               transition-all duration-1000 ease-out ${isLoaded ? 'opacity-100' : 'opacity-0 translate-y-8'}`}
           >
-            {t('hero.greeting')} <span className="inline-block animate-bounce ml-2">👋</span>
+            {t('hero.greeting')} 
           </h1>
           <p 
             className={`text-lg md:text-xl text-gray-600 mb-8 leading-relaxed transition-all duration-1000 delay-300 ease-out
@@ -68,11 +71,11 @@ const HeroSection = () => {
         {/* Right Column - Portrait Image (using the green background image) */}
         <div className={`flex justify-center items-center order-1 lg:order-2 transition-all duration-1000 delay-300 ease-out ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
           <div className="relative rounded-full overflow-hidden shadow-xl w-64 h-64 md:w-80 md:h-80 lg:w-96 lg:h-96 hover:scale-[1.02] transition-all duration-500 ease-in-out">
-            <div className="absolute inset-0 bg-gradient-to-t from-pink-300/50 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
-            <img 
+          <div className="absolute inset-0 bg-gradient-to-t from-pink-300/40 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300 z-10" />
+          <img 
               src={`${import.meta.env.BASE_URL}projects/me.png`}
               alt="Barbara Chertier" 
-              className="w-full h-full object-cover"
+              className="w-full h-full object-cover object-center scale-125"
             />
           </div>
         </div>
