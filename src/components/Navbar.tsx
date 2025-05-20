@@ -1,146 +1,137 @@
-
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { cn } from "@/lib/utils";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useLanguage } from "@/contexts/LanguageContext";
 
+/**
+ * Navbar completamente responsive che non sovrappone il contenuto.
+ * ‣ Breakpoint mobile <→ desktop (md: 768 px)
+ * ‣ Menu mobile con slide-down + blocco scroll sotto
+ * ‣ Calcolo dinamico dell’altezza per inserire uno *spacer* che spinga il contenuto in basso
+ * ‣ Accessibilità migliorata (aria-label, aria-hidden, pointer-events)
+ */
+
+const links = ["about", "experience", "skills", "portfolio", "contact"] as const;
+
 const Navbar = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { t } = useLanguage();
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
 
+  /* ----------  EFFECTS  ---------- */
+  // evidenzia background dopo scroll
   useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+    const onScroll = () => setIsScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  return (
-    <nav
-      className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 py-4 md:py-5",
-        isScrolled
-          ? "bg-offwhite/95 backdrop-blur-sm shadow-sm"
-          : "bg-transparent"
-      )}
+  // blocca/riattiva lo scroll della pagina quando il menu mobile è aperto
+  useEffect(() => {
+    document.documentElement.style.overflow = mobileOpen ? "hidden" : "";
+  }, [mobileOpen]);
+
+  // calcola dinamicamente l’altezza della navbar per evitare sovrapposizioni
+  useEffect(() => {
+    const setHeightVar = () => {
+      const h = headerRef.current?.offsetHeight ?? 0;
+      document.documentElement.style.setProperty("--nav-h", `${h}px`);
+    };
+    setHeightVar();
+    window.addEventListener("resize", setHeightVar);
+    return () => window.removeEventListener("resize", setHeightVar);
+  }, []);
+
+  /* ----------  HELPERS  ---------- */
+  const navLink = (id: typeof links[number]) => (
+    <a
+      key={id}
+      href={`#${id}`}
+      className="hover:text-pink-dark transition-colors"
+      onClick={() => setMobileOpen(false)}
     >
-      <div className="max-w-7xl mx-auto flex justify-between items-center">
-        <a href="#" className="text-xl md:text-2xl font-playfair font-medium">
-          Barbara Chertier
-        </a>
+      {t(`nav.${id}`)}
+    </a>
+  );
 
-        {/* Desktop Menu */}
-        <div className="hidden md:flex items-center space-x-6">
-          <div className="flex space-x-6">
-            <a href="#about" className="hover:text-pink-dark transition-colors">
-              {t('nav.about')}
-            </a>
-            <a href="#experience" className="hover:text-pink-dark transition-colors">
-              {t('nav.experience')}
-            </a>
-            <a href="#skills" className="hover:text-pink-dark transition-colors">
-              {t('nav.skills')}
-            </a>
-            <a href="#portfolio" className="hover:text-pink-dark transition-colors">
-              {t('nav.portfolio')}
-            </a>
-            <a href="#contact" className="hover:text-pink-dark transition-colors">
-              {t('nav.contact')}
-            </a>
-          </div>
-          
-          <div className="h-6 border-l border-gray-300 mx-2"></div>
-          
-          <LanguageSwitcher />
-        </div>
-
-        {/* Mobile Menu Button */}
-        <div className="md:hidden flex items-center gap-4">
-          <LanguageSwitcher />
-          
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle menu"
-          >
-            <div className="w-6 flex flex-col items-end gap-1.5">
-              <span
-                className={cn(
-                  "h-0.5 bg-foreground transition-all",
-                  mobileMenuOpen ? "w-6 -rotate-45 translate-y-2" : "w-6"
-                )}
-              ></span>
-              <span
-                className={cn(
-                  "h-0.5 bg-foreground transition-all",
-                  mobileMenuOpen ? "opacity-0" : "w-4"
-                )}
-              ></span>
-              <span
-                className={cn(
-                  "h-0.5 bg-foreground transition-all",
-                  mobileMenuOpen ? "w-6 rotate-45 -translate-y-2" : "w-5"
-                )}
-              ></span>
-            </div>
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Menu */}
-      <div
+  /* ----------  RENDER  ---------- */
+  return (
+    <>
+      {/* Navbar fixed */}
+      <header
+        ref={headerRef}
         className={cn(
-          "fixed inset-0 bg-offwhite/95 backdrop-blur-sm z-40 pt-24 px-6 flex flex-col items-center transition-transform duration-300 ease-in-out md:hidden",
-          mobileMenuOpen ? "translate-y-0" : "-translate-y-full"
+          "fixed inset-x-0 top-0 z-50 transition-colors duration-300",
+          isScrolled ? "bg-offwhite/95 backdrop-blur shadow-sm" : "bg-transparent"
         )}
       >
-        <div className="flex flex-col items-center space-y-6 text-lg">
+        <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-6 lg:px-8">
+          {/* Brand */}
           <a
-            href="#about"
-            className="hover:text-pink-dark transition-colors"
-            onClick={() => setMobileMenuOpen(false)}
+            href="#"
+            className="font-playfair text-xl font-medium md:text-2xl lg:text-3xl"
           >
-            {t('nav.about')}
+            Barbara&nbsp;Chertier
           </a>
-          <a
-            href="#experience"
-            className="hover:text-pink-dark transition-colors"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            {t('nav.experience')}
-          </a>
-          <a
-            href="#skills"
-            className="hover:text-pink-dark transition-colors"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            {t('nav.skills')}
-          </a>
-          <a
-            href="#portfolio"
-            className="hover:text-pink-dark transition-colors"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            {t('nav.portfolio')}
-          </a>
-          <a
-            href="#contact"
-            className="hover:text-pink-dark transition-colors"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            {t('nav.contact')}
-          </a>
-        </div>
+
+          {/* Desktop Links */}
+          <div className="hidden md:flex items-center gap-8 lg:gap-10">
+            <div className="flex gap-8 lg:gap-10">{links.map(navLink)}</div>
+            <div className="h-6 border-l border-gray-300" />
+            <LanguageSwitcher />
+          </div>
+
+          {/* Burger */}
+          <div className="flex items-center gap-4 md:hidden">
+            <LanguageSwitcher />
+            <button
+              aria-label={mobileOpen ? "Chiudi menu" : "Apri menu"}
+              onClick={() => setMobileOpen((o) => !o)}
+              className="relative h-6 w-6"
+            >
+              {/* linee burger / X */}
+              <span
+                aria-hidden
+                className={cn(
+                  "absolute inset-x-0 top-0 h-0.5 bg-foreground transition-transform",
+                  mobileOpen ? "translate-y-2 rotate-45" : ""
+                )}
+              />
+              <span
+                aria-hidden
+                className={cn(
+                  "absolute inset-x-0 top-1/2 h-0.5 -translate-y-1/2 bg-foreground transition-opacity",
+                  mobileOpen ? "opacity-0" : ""
+                )}
+              />
+              <span
+                aria-hidden
+                className={cn(
+                  "absolute inset-x-0 bottom-0 h-0.5 bg-foreground transition-transform",
+                  mobileOpen ? "-translate-y-2 -rotate-45" : ""
+                )}
+              />
+            </button>
+          </div>
+        </nav>
+      </header>
+
+      {/* Spacer (push del contenuto) */}
+      <div aria-hidden className="h-[var(--nav-h)]" />
+
+      {/* Overlay mobile menu */}
+      <div
+        className={cn(
+          "fixed inset-0 z-40 flex flex-col items-center justify-center gap-8 bg-offwhite/95 px-6 text-lg backdrop-blur transition-[transform,opacity] duration-300 md:hidden",
+          mobileOpen
+            ? "translate-y-0 opacity-100 pointer-events-auto"
+            : "-translate-y-full opacity-0 pointer-events-none"
+        )}
+      >
+        {links.map(navLink)}
       </div>
-    </nav>
+    </>
   );
 };
 

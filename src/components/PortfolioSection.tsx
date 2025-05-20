@@ -1,79 +1,103 @@
+import { useState, useEffect, useRef } from 'react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
+import CategoriesView from './portfolio/CategoriesView';
 import CategoryIntro from './CategoryIntro';
 import ProjectGallery from './ProjectGallery';
-import { useState, useEffect, useRef } from 'react';
-import { useLanguage } from "../contexts/LanguageContext";
-import { NavigationLevel, Project } from './portfolio/types';
-import { projectsData } from './portfolio/projectsData';
-import { categoriesData } from './portfolio/categoriesData'; // si tu as mis les catégories dans un autre fichier
-import CategoriesView from './portfolio/CategoriesView';
-import CategoryHeader from './portfolio/CategoryHeader';
-import ProjectsGrid from './portfolio/ProjectsGrid';
 import ProjectDetailView from './portfolio/ProjectDetailView';
 import PortfolioNavigation from './portfolio/PortfolioNavigation';
 
-// Aggiunta funzione fittizia per gestire l'animazione
+import { categoriesData } from './portfolio/categoriesData';
+import { projectsData }   from './portfolio/projectsData';
+
+import { NavigationLevel, Project } from './portfolio/types';
+
+/* ──────────────────────────
+   Helpers
+────────────────────────── */
 const getAnimationClasses = (level: NavigationLevel) => {
   switch (level) {
     case 'categories':
       return 'translate-y-0 opacity-100';
     case 'projects':
-      return 'translate-y-4 opacity-0';
+      return 'translate-y-4 opacity-100';
     case 'projectDetail':
-      return 'translate-y-8 opacity-0';
+      return 'translate-y-8 opacity-100';
     default:
       return '';
   }
 };
 
 const PortfolioSection = () => {
+  /* ───── STATE ───── */
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [navigationLevel, setNavigationLevel] = useState<NavigationLevel>('categories');
-  const [isVisible, setIsVisible] = useState(true);
-  const sectionRef = useRef(null);
+  const [selectedProject,  setSelectedProject]  = useState<Project | null>(null);
+  const [navigationLevel,  setNavigationLevel]  = useState<NavigationLevel>('categories');
+
+  /* visibilità titolo/sezione (intersection observer) */
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLDivElement | null>(null);
+
   const { t, language } = useLanguage();
 
+  /* ───── EFFECT: header fade-in ───── */
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  /* ───── CALLBACKS ───── */
   const handleCategoryClick = (categoryId: string) => {
-    setNavigationLevel('projects');
     setSelectedCategory(categoryId);
     setSelectedProject(null);
+    setNavigationLevel('projects');
   };
 
   const handleProjectClick = (project: Project) => {
-    setNavigationLevel('projectDetail');
     setSelectedProject(project);
+    setNavigationLevel('projectDetail');
   };
 
   const handleBackToCategories = () => {
-    setNavigationLevel('categories');
     setSelectedCategory(null);
     setSelectedProject(null);
+    setNavigationLevel('categories');
   };
 
   const handleBackToProjects = () => {
-    setNavigationLevel('projects');
     setSelectedProject(null);
+    setNavigationLevel('projects');
   };
 
-  const getProjectsByCategory = (categoryId: string | null) => {
-    if (!categoryId) return [];
-    return projectsData(language).filter(project => project.category === categoryId);
-  };
+  /* ───── HELPERS ───── */
+  const getProjectsByCategory = (categoryId: string | null) =>
+    categoryId ? projectsData(language).filter(p => p.category === categoryId) : [];
 
-  const getCurrentCategory = () => {
-    if (!selectedCategory) return null;
-    return categoriesData(t, language).find(category => category.id === selectedCategory) || null;
-  };
+  const getCurrentCategory = () =>
+    selectedCategory
+      ? categoriesData(t, language).find(c => c.id === selectedCategory) ?? null
+      : null;
 
+  /* ───── DEBUG ───── */
   useEffect(() => {
-    console.log("Selected Category:", selectedCategory);
-    console.log("Selected Project:", selectedProject);
+    console.log('Selected Category:', selectedCategory);
+    console.log('Selected Project:',  selectedProject);
   }, [selectedCategory, selectedProject]);
 
+  /* ───── RENDER ───── */
   return (
     <section id="portfolio" className="py-8 bg-offwhite relative z-10">
       <div ref={sectionRef} className="section-container">
+        {/* header sezione */}
         <span className={`text-pink-dark font-medium block transition-all duration-700 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
           {t('portfolio.subtitle')}
         </span>
@@ -81,7 +105,8 @@ const PortfolioSection = () => {
           {t('portfolio.title')}
         </h2>
 
-        <PortfolioNavigation 
+        {/* breadcrumb / back buttons */}
+        <PortfolioNavigation
           navigationLevel={navigationLevel}
           handleBackToCategories={handleBackToCategories}
           handleBackToProjects={handleBackToProjects}
@@ -92,34 +117,41 @@ const PortfolioSection = () => {
           language={language}
         />
 
-        {/* Level 1 - Category Overview */}
-        <div className={`relative transition-all duration-500 transform ${getAnimationClasses(navigationLevel)}`}>
-          <CategoriesView 
+        {/* ─────────────────────────────────────────────
+            ① LISTA CATEGORIE
+        ───────────────────────────────────────────── */}
+        <div className={`transition-all duration-500 ${getAnimationClasses(navigationLevel)}`}>
+          <CategoriesView
             categories={categoriesData(t, language)}
-            isVisible={true}
-            handleCategoryClick={handleCategoryClick}
             language={language}
+            activeCategoryId={selectedCategory}        /* null => mostra lista */
+            onSelect={handleCategoryClick}
           />
         </div>
 
-{navigationLevel === 'projects' && selectedCategory && (
-  <>
-    <CategoryIntro
-      category={getCurrentCategory()}
-      language={language}
-    />
-    <ProjectGallery
-      projects={getProjectsByCategory(selectedCategory)}
-      onSelectProject={handleProjectClick}
-      language={language}
-    />
-  </>
-)}
+        {/* ─────────────────────────────────────────────
+            ② GRID PROGETTI
+        ───────────────────────────────────────────── */}
+        {navigationLevel === 'projects' && selectedCategory && (
+          <>
+            <CategoryIntro
+              category={getCurrentCategory()}
+              language={language}
+            />
 
+            <ProjectGallery
+              projects={getProjectsByCategory(selectedCategory)}
+              onSelectProject={handleProjectClick}
+              language={language}
+            />
+          </>
+        )}
 
-
+        {/* ─────────────────────────────────────────────
+            ③ DETTAGLIO PROGETTO
+        ───────────────────────────────────────────── */}
         {navigationLevel === 'projectDetail' && selectedProject && (
-          <ProjectDetailView 
+          <ProjectDetailView
             project={selectedProject}
             handleBackToProjects={handleBackToProjects}
             language={language}

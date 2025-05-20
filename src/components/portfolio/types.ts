@@ -6,7 +6,7 @@ export interface Category {
   name: string;
   icon: ReactNode;
   description?: string;
-  coverImage?: string;
+  coverImage?: string[];
   bgColor?: string;
 }
 

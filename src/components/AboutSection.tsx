@@ -60,20 +60,22 @@ const AboutSection = () => {
         </div>
         
         {/* Image - Updated with new image */}
-        <div className={`transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-8'}`}>
-          <div className="relative">
-            <div className="absolute -top-4 -left-4 w-full h-full border-2 border-pink-light"></div>
-            <img 
-              src="/projects/photo-barbarachertier.png" 
-              alt="Barbara Chertier" 
-              className="w-full h-auto object-cover"
-            />
-            <div className="absolute -bottom-4 -right-4 w-full h-full border-2 border-pink-DEFAULT"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+<div className={`transition-all duration-1000 delay-300 ${isVisible ? 'opacity-100' : 'opacity-0 translate-y-8'}`}>
+  <div className="relative w-full h-[400px]">
+    <div className="absolute -top-4 -left-4 w-full h-full border-2 border-pink-light"></div>
+    <img 
+      src={`${import.meta.env.BASE_URL}projects/aboutme.JPEG`} 
+      alt="Barbara Chertier" 
+      className="w-full h-full object-cover border-4 border-pink-200"
+    />
+    <div className="absolute -bottom-4 -right-4 w-full h-full border-2 border-pink-DEFAULT"></div>
+  </div>
+</div>
+
+</div> {/* ← fermeture de .section-container */}
+</section>
+);
 };
+
 
 export default AboutSection;

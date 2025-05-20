@@ -85,7 +85,7 @@ export const projectsData = (language: string): Project[] => [
       ? "A fun and light social media video for Doomli."
       : "Vidéo légère et engageante pour les réseaux sociaux de Doomli.",
     video: true,
-    videoSrc: "Doomli c'est quoi.mp4",
+    videoSrc: "Doomli.mp4",
     tools: ["CapCut", "After Effects"]
   },
   {
