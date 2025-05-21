@@ -100,20 +100,7 @@ export const projectsData = (language: string): Project[] => [
     videoSrc: "APRIL 2025 STORViX.mp4",
     tools: ["After Effects", "Alight Motion", "Premiere Pro", "CapCut"]
   },
-  {
-    id: "ideon-video",
-    category: "video",
-    title:
-      language === "en" ? "IDEON Corporate Video" : "Vidéo Corporate IDEON",
-    description:
-      language === "en"
-        ? `Commissioned by Storvix for the IDEON incubator at Ideon Science Park, this video offers an authentic, employee-driven look at Scandinavia’s largest deep-tech hub. I interviewed team members across every building to capture their views on collaboration, innovation and office culture, while showcasing the vibrant workspaces.`
-        : `Réalisée pour Storvix dans le cadre de son incubation à Ideon Science Park, cette vidéo propose un regard authentique, porté par les employés, sur l’un des plus grands pôles deep tech de Scandinavie. J’ai parcouru chaque bâtiment pour recueillir leurs avis sur la collaboration, l’innovation et la culture d’entreprise, tout en filmant des espaces de travail dynamiques.`,
-    images: ["ideon.jpg"],
-    video: true,
-    videoSrc: "ideon_final_video.mp4",
-    tools: ["After Effects", "Premiere Pro"]
-  },
+  
   {
     id: "racontr",
     category: "video",
