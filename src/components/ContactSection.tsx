@@ -60,7 +60,7 @@ const ContactSection = () => {
                 <div>
                   <h3 className="font-medium">{t('contact.location')}</h3>
                   <p className="text-muted-foreground">
-                    28 chemin de la renga, 34550 Bessan, France
+                    34550 Bessan, France
                   </p>
                 </div>
               </div>

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useEffect, useRef, useMemo } from 'react';
 import {
   Award,
   Globe,
@@ -8,158 +8,146 @@ import {
   Video,
   MessageSquare,
   Users,
-} from "lucide-react";
-import { useLanguage } from "@/contexts/LanguageContext";
-import { Progress } from "./ui/progress";
+} from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
+/* ──────────────── Types ──────────────── */
 interface Skill {
   id: number;
   name: string;
-  proficiency: number;
+  proficiency: number; // ← toujours présent mais plus affiché
   category: string;
   icon: React.ReactNode;
   description: string;
 }
 
+/* ──────────────── Component ──────────────── */
 const SkillsSection = () => {
   const { t, language } = useLanguage();
 
-  /* ──────────────────────────────
-     STATE
-  ────────────────────────────── */
-  const [selectedCategory, setSelectedCategory] = useState<"all" | string>(
-    "all"
+  /* ----- State ----- */
+  const [selectedCategory, setSelectedCategory] = useState<'all' | string>(
+    'all'
   );
   const [selectedSkill, setSelectedSkill] = useState<Skill | null>(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [animatedSkills, setAnimatedSkills] = useState<Set<number>>(
-    () => new Set()
-  );
 
-  // Salviamo tutti i timeout così possiamo cancellarli
-  const timeoutsRef = useRef<NodeJS.Timeout[]>([]);
   const sectionRef = useRef<HTMLDivElement>(null);
 
-  /* ──────────────────────────────
-     DATI (ricreati a ogni render per cambiare lingua)
-  ────────────────────────────── */
+  /* ----- Data (re-crée à chaque render pour changer la langue) ----- */
   const skills: Skill[] = [
     {
       id: 1,
-      name: "Teamwork",
+      name: 'Teamwork',
       proficiency: 100,
-      category: "teamwork",
+      category: 'teamwork',
       icon: <Users className="w-5 h-5 text-pink-dark" />,
       description:
-        language === "fr"
+        language === 'fr'
           ? "Je m'épanouis dans les environnements collaboratifs, où l'échange d'idées et le soutien mutuel créent de belles choses."
-          : "I thrive in collaborative environments, where sharing ideas and supporting others creates meaningful outcomes.",
+          : 'I thrive in collaborative environments, where sharing ideas and supporting others creates meaningful outcomes.',
     },
     {
       id: 2,
-      name: "Social Media Management",
+      name: 'Social Media Management',
       proficiency: 90,
-      category: "social",
+      category: 'social',
       icon: <MessageSquare className="w-5 h-5 text-pink-dark" />,
       description:
-        language === "fr"
-          ? "De la stratégie à la création de contenu, je sais comment faire rayonner une marque sur les réseaux avec authenticité."
-          : "From strategy to content creation, I know how to make brands shine online through genuine and engaging social campaigns.",
+        language === 'fr'
+          ? 'De la stratégie à la création de contenu, je sais comment faire rayonner une marque sur les réseaux avec authenticité.'
+          : 'From strategy to content creation, I know how to make brands shine online through genuine and engaging social campaigns.',
     },
     {
       id: 3,
-      name: "Data Analysis",
+      name: 'Data Analysis',
       proficiency: 65,
-      category: "data",
+      category: 'data',
       icon: <BarChart className="w-5 h-5 text-pink-dark" />,
       description:
-        language === "fr"
-          ? "Curieuse et analytique, j'aime transformer les données en idées utiles pour mieux communiquer."
-          : "I'm curious and analytical. I enjoy translating numbers into insights that support smart communication decisions.",
+        language === 'fr'
+          ? 'Curieuse et analytique, j’aime transformer les données en idées utiles pour mieux communiquer.'
+          : 'I\'m curious and analytical. I enjoy translating numbers into insights that support smart communication decisions.',
     },
     {
       id: 4,
-      name: "Visual Creation",
+      name: 'Visual Creation',
       proficiency: 80,
-      category: "visual",
+      category: 'visual',
       icon: <Palette className="w-5 h-5 text-pink-dark" />,
       description:
-        language === "fr"
+        language === 'fr'
           ? "Le design, c'est mon terrain de jeu. J’aime créer des visuels chaleureux, modernes et pleins de sens."
-          : "Design is where I express my creativity. I bring ideas to life through visuals that feel warm, modern, and thoughtful.",
+          : 'Design is where I express my creativity. I bring ideas to life through visuals that feel warm, modern, and thoughtful.',
     },
     {
       id: 5,
-      name: "Video Creation",
+      name: 'Video Creation',
       proficiency: 80,
-      category: "video",
+      category: 'video',
       icon: <Video className="w-5 h-5 text-pink-dark" />,
       description:
-        language === "fr"
+        language === 'fr'
           ? "J'adore raconter des histoires en mouvement. Je monte mes vidéos avec émotion, rythme et toujours une petite touche élégante."
-          : "I love telling stories through motion. I edit with emotion, rhythm, and always a touch of elegance.",
+          : 'I love telling stories through motion. I edit with emotion, rhythm, and always a touch of elegance.',
     },
     {
       id: 6,
-      name: "SEO",
+      name: 'SEO',
       proficiency: 70,
-      category: "seo",
+      category: 'seo',
       icon: <Globe className="w-5 h-5 text-pink-dark" />,
       description:
-        language === "fr"
-          ? "Comprendre comment le contenu vit sur le web, c'est essentiel. J’optimise toujours avec clarté et intention."
-          : "Understanding how content lives and thrives online is part of my mindset. I optimize with intention and clarity.",
+        language === 'fr'
+          ? 'Comprendre comment le contenu vit sur le web, c\'est essentiel. J’optimise toujours avec clarté et intention.'
+          : 'Understanding how content lives and thrives online is part of my mindset. I optimize with intention and clarity.',
     },
     {
       id: 7,
-      name: "Content Writing",
+      name: 'Content Writing',
       proficiency: 80,
-      category: "writing",
+      category: 'writing',
       icon: <Code className="w-5 h-5 text-pink-dark" />,
       description:
-        language === "fr"
-          ? "Les mots sont mon terrain d’expression. J’écris avec sincérité, justesse, et toujours en pensant à la personne qui lit."
-          : "Words are my playground. I write with heart, purpose, and always keep the reader in mind.",
+        language === 'fr'
+          ? 'Les mots sont mon terrain d’expression. J’écris avec sincérité, justesse, et toujours en pensant à la personne qui lit.'
+          : 'Words are my playground. I write with heart, purpose, and always keep the reader in mind.',
     },
     {
       id: 8,
-      name: "Adobe Creative Suite",
+      name: 'Adobe Creative Suite',
       proficiency: 85,
-      category: "tools",
+      category: 'tools',
       icon: <Palette className="w-5 h-5 text-pink-dark" />,
       description:
-        language === "fr"
-          ? "De Photoshop à After Effects, la suite Adobe me permet de transformer chaque idée créative en résultat concret."
-          : "From Photoshop to After Effects, Adobe tools help me shape every creative idea I have with precision.",
+        language === 'fr'
+          ? 'De Photoshop à After Effects, la suite Adobe me permet de transformer chaque idée créative en résultat concret.'
+          : 'From Photoshop to After Effects, Adobe tools help me shape every creative idea I have with precision.',
     },
     {
       id: 9,
-      name: "Marketing Strategy",
+      name: 'Marketing Strategy',
       proficiency: 75,
-      category: "marketing",
+      category: 'marketing',
       icon: <Award className="w-5 h-5 text-pink-dark" />,
       description:
-        language === "fr"
-          ? "Derrière chaque belle campagne, il y a une stratégie. J’aime créer des plans qui relient créativité et efficacité."
-          : "Behind every beautiful campaign, there’s a strategy. I craft plans that align creativity with impact.",
+        language === 'fr'
+          ? 'Derrière chaque belle campagne, il y a une stratégie. J’aime créer des plans qui relient créativité et efficacité.'
+          : 'Behind every beautiful campaign, there’s a strategy. I craft plans that align creativity with impact.',
     },
   ];
 
-  /* ──────────────────────────────
-     SKILL VISIBILI
-  ────────────────────────────── */
+  /* ----- Filtrage visuel ----- */
   const visibleSkills = useMemo(
     () =>
-      (selectedCategory === "all"
+      (selectedCategory === 'all'
         ? skills
         : skills.filter((s) => s.category === selectedCategory)
       ).filter(Boolean),
-    [selectedCategory, language] // language fa rigenerare le description
+    [selectedCategory, language]
   );
 
-  /* ──────────────────────────────
-     IntersectionObserver
-  ────────────────────────────── */
+  /* ----- IntersectionObserver pour fade-in ----- */
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -175,113 +163,83 @@ const SkillsSection = () => {
     return () => observer.disconnect();
   }, []);
 
-  /* ──────────────────────────────
-     Animazione progress bar
-  ────────────────────────────── */
+  /* ----- Bloque le scroll quand modale ouverte ----- */
   useEffect(() => {
-    if (!isVisible || visibleSkills.length === 0) return;
-
-    // reset
-    setAnimatedSkills(new Set());
-    timeoutsRef.current.forEach(clearTimeout);
-    timeoutsRef.current = [];
-
-    visibleSkills.forEach((skill, idx) => {
-      const timeout = setTimeout(() => {
-        setAnimatedSkills((prev) => {
-          const next = new Set(prev);
-          if (skill?.id !== undefined) next.add(skill.id);
-          return next;
-        });
-      }, 200 + idx * 200);
-
-      timeoutsRef.current.push(timeout);
-    });
-
+    document.body.style.overflow = selectedSkill ? 'hidden' : 'auto';
     return () => {
-      timeoutsRef.current.forEach(clearTimeout);
-      timeoutsRef.current = [];
-    };
-  }, [isVisible, visibleSkills]);
-
-  /* ──────────────────────────────
-     Blocco scroll quando modale aperto
-  ────────────────────────────── */
-  useEffect(() => {
-    document.body.style.overflow = selectedSkill ? "hidden" : "auto";
-
-    // cleanup: ripristina sempre lo scroll
-    return () => {
-      document.body.style.overflow = "auto";
+      document.body.style.overflow = 'auto';
     };
   }, [selectedSkill]);
 
-  /* ──────────────────────────────
-     RENDER
-  ────────────────────────────── */
+  /* ----- Render ----- */
   return (
     <section id="skills" className="py-20 bg-beige-light">
       <div ref={sectionRef} className="section-container">
-        {/* HEADER */}
+        {/* Header */}
         <span
           className={`text-pink-dark font-medium block transition-all duration-700 ${
-            isVisible ? "opacity-100" : "opacity-0"
+            isVisible ? 'opacity-100' : 'opacity-0'
           }`}
         >
-          {t("skills.subtitle")}
+          {t('skills.subtitle')}
         </span>
 
         <h2
           className={`section-title mt-2 transition-all duration-700 delay-100 ${
-            isVisible ? "opacity-100" : "opacity-0"
+            isVisible ? 'opacity-100' : 'opacity-0'
           }`}
         >
-          {t("skills.title")}
+          {t('skills.title')}
         </h2>
 
-        {/* GRIGLIA SKILL */}
+        {/* Grille des skills */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
           {visibleSkills.map((skill, idx) => {
             if (!skill) return null;
-
             const delayMs = 200 + idx * 100;
-            const isAnimated = animatedSkills.has(skill.id);
 
             return (
-              <div
+              <button
                 key={skill.id}
-                className={`bg-offwhite rounded-lg p-6 transition-all duration-700 ${
-                  isVisible
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-8"
-                }`}
-                style={{ transitionDelay: `${delayMs}ms` }}
                 onClick={() => setSelectedSkill(skill)}
+                className={`
+                  group w-full text-left bg-offwhite rounded-lg p-6
+                  transition-all duration-700
+                  ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}
+                  hover:-translate-y-1 hover:shadow-lg
+                  focus-visible:-translate-y-1 focus-visible:shadow-lg
+                  focus-visible:outline-none
+                `}
+                style={{ transitionDelay: `${delayMs}ms` }}
               >
-                <div className="flex items-center justify-between mb-4">
-                  <div className="flex items-center gap-3">
-                    <div className="bg-pink-light w-10 h-10 rounded-full flex items-center justify-center">
-                      {skill.icon}
-                    </div>
-                    <h3 className="font-medium cursor-pointer">
-                      {skill.name}
-                    </h3>
-                  </div>
-                  <span className="text-sm font-medium">
-                    {skill.proficiency}%
+                <div className="flex items-center gap-3">
+                  {/* Icône */}
+                  <span
+                    className="
+                      flex h-10 w-10 items-center justify-center rounded-full
+                      bg-pink-100 transition-colors
+                      group-hover:bg-pink-200 group-focus-visible:bg-pink-200
+                    "
+                  >
+                    {skill.icon}
                   </span>
-                </div>
 
-                <Progress
-                  value={isAnimated ? skill.proficiency : 0}
-                  className="h-2 bg-beige-light"
-                />
-              </div>
+                  {/* Nom */}
+                  <h3
+                    className="
+                      font-medium transition-colors
+                      group-hover:text-pink-600 group-focus-visible:text-pink-600
+                    "
+                  >
+                    {skill.name}
+                  </h3>
+                </div>
+              </button>
             );
           })}
         </div>
 
-        {/* MODALE */}
+        {/* Modale */}
         {selectedSkill && (
           <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
             <div className="bg-white max-w-md p-6 rounded-xl shadow-lg text-center relative">

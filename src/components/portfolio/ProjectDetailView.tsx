@@ -7,12 +7,18 @@ import { Project, Category } from './types';
 
 const getImagePath = (imageName: string) =>
   `${import.meta.env.BASE_URL}projects/${encodeURIComponent(
-    imageName.replace(/^\/?projects\//, ''),
+    imageName.replace(/^\/?projects\//, '')
   )}`;
 
 const getVideoPath = (videoName: string) =>
   `${import.meta.env.BASE_URL}projects/${encodeURIComponent(
-    videoName.replace(/^\/?projects\//, ''),
+    videoName.replace(/^\/?projects\//, '')
+  )}`;
+
+/* NEW → résout les chemins PDF / fichiers locaux */
+const getFilePath = (fileName: string) =>
+  `${import.meta.env.BASE_URL}projects/${encodeURIComponent(
+    fileName.replace(/^\/?projects\//, '')
   )}`;
 
 /* --------------------------------------------------------- */
@@ -61,7 +67,7 @@ const MediaCarousel = ({
         ))}
       </div>
 
-      {/* Dots (bottom‑center) */}
+      {/* Dots (bottom-center) */}
       {images.length > 1 && (
         <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1">
           {images.map((_, i) => (
@@ -71,7 +77,9 @@ const MediaCarousel = ({
               style={{
                 backgroundColor:
                   trackRef.current &&
-                  Math.round(trackRef.current.scrollLeft / trackRef.current.clientWidth) === i
+                  Math.round(
+                    trackRef.current.scrollLeft / trackRef.current.clientWidth
+                  ) === i
                     ? 'rgba(0,0,0,0.7)'
                     : undefined,
               }}
@@ -108,7 +116,22 @@ const ProjectDetailView = ({
   language,
   categories,
 }: ProjectDetailViewProps) => {
-  const hasLink = Boolean(project.link);
+  /* ───── Nettoyage du lien ───── */
+  const rawLink =
+    Array.isArray(project.link) && project.link.length > 0
+      ? project.link[0]
+      : project.link;
+
+  const hasLink = typeof rawLink === 'string' && rawLink.length > 0;
+  const isPdf = typeof rawLink === 'string' && /\.pdf$/i.test(rawLink);
+
+  /* URL finale : externe (http/https) OU fichier local */
+  const fileSrc =
+    hasLink && /^https?:\/\//.test(rawLink!)
+      ? rawLink!
+      : hasLink
+      ? getFilePath(rawLink!)
+      : '';
 
   return (
     <div className="relative bg-white rounded-lg shadow-lg overflow-hidden">
@@ -144,6 +167,13 @@ const ProjectDetailView = ({
                 />
               </div>
             )
+          ) : isPdf ? (
+            /* PDF embed si pas d’images/vidéo */
+            <iframe
+              src={`${fileSrc}#toolbar=0&view=fitH`}
+              className="w-full h-72 md:h-[28rem] rounded-lg border-0"
+              title={project.title + ' PDF'}
+            />
           ) : (
             <div className="w-full h-72 md:h-[28rem] bg-gray-100 rounded-lg flex items-center justify-center">
               <img
@@ -193,6 +223,24 @@ const ProjectDetailView = ({
                 </span>
               ))}
             </div>
+          )}
+
+          {/* External link */}
+          {hasLink && (
+            <Button
+              variant="secondary"
+              className="self-start"
+              onClick={() => window.open(fileSrc, '_blank', 'noopener')}
+            >
+              {isPdf
+                ? language === 'en'
+                  ? 'Open PDF'
+                  : 'Ouvrir le PDF'
+                : language === 'en'
+                ? 'Visit'
+                : 'Visiter'}
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
           )}
         </div>
       </div>
